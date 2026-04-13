@@ -37,23 +37,17 @@
     overflow-x: hidden;
   }
 
-  /* ── GAMOSA RIBBON ── */
   .gamosa-ribbon {
     height: 10px;
     background: repeating-linear-gradient(
       90deg,
-      var(--gamosa-red) 0px,
-      var(--gamosa-red) 18px,
-      #fff 18px,
-      #fff 24px,
-      var(--gamosa-red) 24px,
-      var(--gamosa-red) 28px,
-      #fff 28px,
-      #fff 34px
+      var(--gamosa-red) 0px, var(--gamosa-red) 18px,
+      #fff 18px, #fff 24px,
+      var(--gamosa-red) 24px, var(--gamosa-red) 28px,
+      #fff 28px, #fff 34px
     );
   }
 
-  /* ── NAV ── */
   nav {
     background: var(--white);
     border-bottom: 1.5px solid var(--border);
@@ -101,23 +95,18 @@
 
   .nav-cta:hover { background: #EA6A0A; transform: translateY(-1px); }
 
-  /* ── HERO ── */
- /* ── HERO ── */
-.hero {
-  position: relative;
-  min-height: 600px; 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-
-  /* I ADDED IT HERE: */
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('images/rang-ghar.jpeg');
-  
-  background-size: cover;       /* This stretches the photo to fit the section */
-  background-position: center;  /* This keeps the center of the photo visible */
-  background-repeat: no-repeat;
-}
+  .hero {
+    position: relative;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('images/rang-ghar.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
 
   .hero-pattern {
     position: absolute; inset: 0;
@@ -135,16 +124,6 @@
     width: 400px; height: 400px;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(255,200,50,0.25) 0%, rgba(255,120,0,0.1) 50%, transparent 70%);
-  }
-
-  .hero-flowers {
-    position: absolute;
-    left: 0; bottom: 0;
-    opacity: 0.15;
-    font-size: 120px;
-    line-height: 1;
-    user-select: none;
-    pointer-events: none;
   }
 
   .hero-content {
@@ -270,9 +249,7 @@
     font-weight: 500;
   }
 
-  /* ── SECTIONS ── */
   section { padding: 4.5rem 1.5rem; }
-
   .container { max-width: 840px; margin: 0 auto; }
 
   .section-label {
@@ -301,12 +278,11 @@
     line-height: 1.7;
   }
 
-  /* ── COMPETITION CARD ── */
   .comp-card {
     background: var(--white);
     border: 1.5px solid var(--border);
     border-radius: 24px;
-    padding: 2.5rem 2.5rem;
+    padding: 2.5rem;
     text-align: center;
     box-shadow: 0 8px 40px rgba(249,115,22,0.08), 0 2px 8px rgba(0,0,0,0.04);
     position: relative;
@@ -374,7 +350,6 @@
     flex-shrink: 0;
   }
 
-  /* ── PRIZES ── */
   .prizes-section { background: var(--cream-dark); }
 
   .prizes-grid {
@@ -396,46 +371,18 @@
   }
 
   .prize-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.06); }
-
-  .prize-card.gold-prize { border-color: #FDE68A; background: linear-gradient(160deg, #FFFBEB, #fff); }
+  .prize-card.gold-prize   { border-color: #FDE68A; background: linear-gradient(160deg, #FFFBEB, #fff); }
   .prize-card.silver-prize { border-color: #E5E7EB; background: linear-gradient(160deg, #F9FAFB, #fff); }
   .prize-card.bronze-prize { border-color: #FED7AA; background: linear-gradient(160deg, #FFF7ED, #fff); }
 
-  .prize-medal {
-    font-size: 2.2rem;
-    margin-bottom: 0.6rem;
-    display: block;
-  }
-
-  .prize-rank {
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 0.3rem;
-  }
-
-  .prize-amount {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--text-dark);
-    line-height: 1.1;
-  }
-
+  .prize-medal  { font-size: 2.2rem; margin-bottom: 0.6rem; display: block; }
+  .prize-rank   { font-size: 0.78rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem; }
+  .prize-amount { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--text-dark); line-height: 1.1; }
   .prize-card.gold-prize .prize-amount { color: var(--gold); }
 
-  .prize-note {
-    font-size: 0.82rem;
-    color: var(--text-muted);
-    text-align: center;
-    margin-top: 0.5rem;
-  }
-
+  .prize-note { font-size: 0.82rem; color: var(--text-muted); text-align: center; margin-top: 0.5rem; }
   .prize-note strong { color: var(--text-mid); }
 
-  /* ── HOW TO ── */
   .steps-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -443,12 +390,7 @@
     position: relative;
   }
 
-  .step-item {
-    text-align: center;
-    padding: 0 0.5rem;
-    animation: fadeUp 0.7s ease both;
-  }
-
+  .step-item { text-align: center; padding: 0 0.5rem; animation: fadeUp 0.7s ease both; }
   .step-item:nth-child(2) { animation-delay: 0.1s; }
   .step-item:nth-child(3) { animation-delay: 0.2s; }
 
@@ -478,21 +420,9 @@
   }
 
   .steps-grid .step-item:last-child .step-num::after { display: none; }
+  .step-title { font-weight: 600; font-size: 1rem; color: var(--text-dark); margin-bottom: 0.4rem; }
+  .step-desc  { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
 
-  .step-title {
-    font-weight: 600;
-    font-size: 1rem;
-    color: var(--text-dark);
-    margin-bottom: 0.4rem;
-  }
-
-  .step-desc {
-    font-size: 0.88rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-
-  /* ── RULES ── */
   .rules-section { background: var(--white); }
 
   .rules-card {
@@ -557,15 +487,13 @@
     color: var(--text-dark);
   }
 
-  .form-card p {
+  .form-card > p {
     font-size: 0.88rem;
     color: var(--text-muted);
     margin-bottom: 1.8rem;
   }
 
-  .form-group {
-    margin-bottom: 1.1rem;
-  }
+  .form-group { margin-bottom: 1.1rem; }
 
   .form-group label {
     display: block;
@@ -597,6 +525,8 @@
     background: #fff;
   }
 
+  .form-group input.error { border-color: var(--red); }
+
   .upload-area {
     border: 2px dashed rgba(249,115,22,0.35);
     border-radius: 12px;
@@ -608,7 +538,8 @@
     position: relative;
   }
 
-  .upload-area:hover { border-color: var(--orange); background: #FFF3E8; }
+  .upload-area:hover  { border-color: var(--orange); background: #FFF3E8; }
+  .upload-area.has-file { border-color: var(--orange); background: #FFF3E8; }
 
   .upload-area input[type="file"] {
     position: absolute; inset: 0;
@@ -637,20 +568,6 @@
   .upload-text { font-size: 0.85rem; color: var(--text-muted); }
   .upload-text strong { color: var(--orange); }
 
-  .fee-note {
-    background: var(--orange-pale);
-    border: 1px solid var(--orange-light);
-    border-radius: 10px;
-    padding: 0.7rem 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 1.4rem 0;
-  }
-
-  .fee-note .label { font-size: 0.85rem; color: var(--text-muted); }
-  .fee-note .amount { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--orange); }
-
   .btn-submit {
     display: block;
     width: 100%;
@@ -666,9 +583,88 @@
     transition: all 0.2s;
     box-shadow: 0 4px 20px rgba(249,115,22,0.35);
     margin-bottom: 1rem;
+    margin-top: 1.4rem;
   }
 
-  .btn-submit:hover { background: #EA6A0A; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(249,115,22,0.45); }
+  .btn-submit:hover:not(:disabled) { background: #EA6A0A; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(249,115,22,0.45); }
+  .btn-submit:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+
+  /* ── Progress bar ── */
+  .progress-wrap {
+    display: none;
+    margin-bottom: 1rem;
+  }
+
+  .progress-wrap.visible { display: block; }
+
+  .progress-bar-bg {
+    height: 6px;
+    background: var(--orange-light);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--orange);
+    border-radius: 99px;
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+
+  .progress-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.4rem;
+    text-align: center;
+  }
+
+  /* ── Success state ── */
+  .success-box {
+    display: none;
+    background: #F0FDF4;
+    border: 1.5px solid #86EFAC;
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .success-box.visible { display: block; }
+
+  .success-icon {
+    width: 56px; height: 56px;
+    background: #DCFCE7;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.6rem;
+  }
+
+  .success-box h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: #166534;
+    margin-bottom: 0.4rem;
+  }
+
+  .success-box p { font-size: 0.88rem; color: #15803D; }
+
+  /* ── Error message ── */
+  .form-error {
+    display: none;
+    background: #FEF2F2;
+    border: 1.5px solid #FCA5A5;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    color: #DC2626;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .form-error.visible { display: block; }
 
   .form-trust {
     display: flex;
@@ -702,7 +698,6 @@
     transform: rotate(-45deg) translateY(-1px);
   }
 
-  /* ── SOCIAL PROOF ── */
   .proof-section { background: var(--white); }
 
   .proof-banner {
@@ -730,11 +725,7 @@
     position: relative;
   }
 
-  .proof-banner p {
-    opacity: 0.85;
-    font-size: 0.95rem;
-    position: relative;
-  }
+  .proof-banner p { opacity: 0.85; font-size: 0.95rem; position: relative; }
 
   .artwork-placeholders {
     display: grid;
@@ -742,25 +733,13 @@
     gap: 1rem;
   }
 
-.artwork-ph {
-  aspect-ratio: 4/5;
-  border-radius: 14px;
-  overflow: hidden;
-  border: 1.5px solid var(--orange-light);
-}
-
-  .artwork-ph .ph-icon {
-    font-size: 2rem;
-    opacity: 0.4;
+  .artwork-ph {
+    aspect-ratio: 4/5;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1.5px solid var(--orange-light);
   }
 
-  .artwork-ph span {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    font-style: italic;
-  }
-
-  /* ── FOOTER ── */
   footer {
     background: var(--text-dark);
     color: rgba(255,255,255,0.7);
@@ -768,12 +747,7 @@
     padding: 2.5rem 1.5rem;
   }
 
-  .footer-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem;
-    color: var(--orange);
-    margin-bottom: 0.8rem;
-  }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--orange); margin-bottom: 0.8rem; }
 
   .footer-links {
     display: flex;
@@ -792,11 +766,7 @@
 
   .footer-links a:hover { color: var(--orange); }
 
-  .footer-follow {
-    font-size: 0.82rem;
-    color: rgba(255,255,255,0.45);
-    margin-bottom: 0.5rem;
-  }
+  .footer-follow { font-size: 0.82rem; color: rgba(255,255,255,0.45); margin-bottom: 0.5rem; }
 
   .instagram-link {
     display: inline-flex;
@@ -842,29 +812,22 @@
     top: 2px; right: 2px;
   }
 
-  .footer-copy {
-    font-size: 0.75rem;
-    color: rgba(255,255,255,0.3);
-    margin-top: 1.2rem;
-  }
+  .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.3); margin-top: 1.2rem; }
 
-  /* ── DECORATIVE DIVIDER ── */
   .divider {
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--orange-light), transparent);
     margin: 0;
   }
 
-  /* ── CENTERED ── */
   .text-center { text-align: center; }
 
-  /* ── RESPONSIVE ── */
   @media (max-width: 600px) {
     .steps-grid .step-num::after { display: none; }
     .artwork-placeholders { grid-template-columns: 1fr 1fr; }
     .artwork-placeholders .artwork-ph:last-child { display: none; }
-    .comp-card { padding: 2rem 1.2rem; }
-    .form-card { padding: 1.8rem 1.2rem; }
+    .comp-card  { padding: 2rem 1.2rem; }
+    .form-card  { padding: 1.8rem 1.2rem; }
   }
 </style>
 </head>
@@ -908,7 +871,7 @@
   <div class="container">
     <div class="comp-card">
       <h2>Taroka Drawing Competition</h2>
-      <div class="prize-pool">₹15,000+</div>
+      <div class="prize-pool">₹25,000+</div>
       <p class="prize-sub">
         Submit your artwork inspired by Bohag Bihu and stand a chance to win exciting cash prizes and get featured on our official page.
       </p>
@@ -937,17 +900,17 @@
       <div class="prize-card gold-prize">
         <span class="prize-medal">🥇</span>
         <div class="prize-rank">1st Prize</div>
-        <div class="prize-amount">₹7,000</div>
+        <div class="prize-amount">₹10,000</div>
       </div>
       <div class="prize-card silver-prize">
         <span class="prize-medal">🥈</span>
         <div class="prize-rank">2nd Prize</div>
-        <div class="prize-amount">₹5,000</div>
+        <div class="prize-amount">₹7,000</div>
       </div>
       <div class="prize-card bronze-prize">
         <span class="prize-medal">🥉</span>
         <div class="prize-rank">3rd Prize</div>
-        <div class="prize-amount">₹3,000</div>
+        <div class="prize-amount">₹5,000</div>
       </div>
     </div>
     <p class="prize-note">🎉 <strong>Winners will be announced publicly</strong> on our official Instagram page after judging is complete.</p>
@@ -972,8 +935,8 @@
       </div>
       <div class="step-item">
         <div class="step-num">2</div>
-        <div class="step-title">Pay Securely</div>
-        <p class="step-desc">Complete your ₹99 entry fee securely via Razorpay – UPI, cards, and net banking accepted.</p>
+        <div class="step-title">Submit Entry</div>
+        <p class="step-desc">Hit submit and your entry is locked in. You'll see a confirmation right on the page.</p>
       </div>
       <div class="step-item">
         <div class="step-num">3</div>
@@ -986,7 +949,6 @@
 
 <div class="divider"></div>
 
-<!-- RULES -->
 <section class="rules-section">
   <div class="container text-center">
     <p class="section-label">Guidelines</p>
@@ -994,30 +956,12 @@
     <p class="section-sub">Please read these carefully before submitting your entry.</p>
     <div class="rules-card">
       <ul class="rules-list">
-        <li>
-          <span class="rule-check"></span>
-          Only original artwork accepted – no AI-generated or copied art.
-        </li>
-        <li>
-          <span class="rule-check"></span>
-          Theme must relate to Bohag Bihu or Assamese culture.
-        </li>
-        <li>
-          <span class="rule-check"></span>
-          One entry per participant only.
-        </li>
-        <li>
-          <span class="rule-check"></span>
-          Accepted formats: JPG and PNG files only.
-        </li>
-        <li>
-          <span class="rule-check"></span>
-          Maximum file size: 5MB per artwork.
-        </li>
-        <li>
-          <span class="rule-check"></span>
-          Decision of the judges is final and binding.
-        </li>
+        <li><span class="rule-check"></span>Only original artwork accepted – no AI-generated or copied art.</li>
+        <li><span class="rule-check"></span>Theme must relate to Bohag Bihu or Assamese culture.</li>
+        <li><span class="rule-check"></span>One entry per participant only.</li>
+        <li><span class="rule-check"></span>Accepted formats: JPG and PNG files only.</li>
+        <li><span class="rule-check"></span>Maximum file size: 5MB per artwork.</li>
+        <li><span class="rule-check"></span>Decision of the judges is final and binding.</li>
       </ul>
     </div>
   </div>
@@ -1034,57 +978,73 @@
 
     <div class="form-card">
       <h3>Entry Form</h3>
-      <p>All fields marked are required. Your data is সুরক্ষিত (safe).</p>
+      <p>All fields are required. Your data is সুরক্ষিত (safe).</p>
 
-      <div class="form-group">
-        <label>Full Name *</label>
-        <input type="text" placeholder="Your full name">
-      </div>
+      <!-- Error message -->
+      <div class="form-error" id="formError"></div>
 
-      <div class="form-group">
-        <label>Email Address *</label>
-        <input type="email" placeholder="you@example.com">
-      </div>
-
-      <div class="form-group">
-        <label>Phone Number <span style="font-weight:400;color:var(--text-muted)">(optional)</span></label>
-        <input type="tel" placeholder="+91  XXXXX XXXXX">
-      </div>
-
-      <div class="form-group">
-        <label>Artwork Title <span style="font-weight:400;color:var(--text-muted)">(optional)</span></label>
-        <input type="text" placeholder="Give your artwork a name">
-      </div>
-
-      <div class="form-group">
-        <label>Upload Artwork *</label>
-        <div class="upload-area">
-          <input type="file" accept=".jpg,.jpeg,.png">
-          <div class="upload-icon"></div>
-          <p class="upload-text"><strong>Click to upload</strong> or drag and drop<br>JPG or PNG · Max 5MB</p>
+      <!-- The actual form fields (hidden after success) -->
+      <div id="formFields">
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" id="name" placeholder="Your full name">
         </div>
+
+        <div class="form-group">
+          <label>Email Address *</label>
+          <input type="email" id="email" placeholder="you@example.com">
+        </div>
+
+        <div class="form-group">
+          <label>Phone Number *</label>
+          <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX">
+        </div>
+
+        <div class="form-group">
+          <label>Age *</label>
+          <input type="number" id="age" placeholder="Your age" min="1" max="120">
+        </div>
+
+        <div class="form-group">
+          <label>Artwork Title *</label>
+          <input type="text" id="artworkTitle" placeholder="Give your artwork a name">
+        </div>
+
+        <div class="form-group">
+          <label>Upload Artwork *</label>
+          <div class="upload-area" id="uploadArea">
+            <input type="file" id="artwork" accept=".jpg,.jpeg,.png">
+            <div class="upload-icon"></div>
+            <p class="upload-text" id="uploadText">
+              <strong>Click to upload</strong> or drag and drop<br>JPG or PNG · Max 5MB
+            </p>
+          </div>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="progress-wrap" id="progressWrap">
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressFill"></div>
+          </div>
+          <p class="progress-label" id="progressLabel">Uploading…</p>
+        </div>
+
+        <button class="btn-submit" id="submitBtn" onclick="handleSubmit()">
+          Submit Entry →
+        </button>
       </div>
 
-      <div class="fee-note">
-        <span class="label">Entry Fee</span>
-        <span class="amount">₹99</span>
+      <!-- Success state -->
+      <div class="success-box" id="successBox">
+        <div class="success-icon">🎉</div>
+        <h4>Entry Submitted!</h4>
+        <p>Your artwork has been received. Good luck — winners will be announced on our Instagram page.</p>
       </div>
-
-      <button class="btn-submit">Submit &amp; Pay ₹99 →</button>
 
       <div class="form-trust">
-        <div class="form-trust-item">
-          <span class="trust-shield"></span>
-          Secure payment via Razorpay
-        </div>
-        <div class="form-trust-item">
-          <span class="trust-shield"></span>
-          Your data is सुरक्षित (safe)
-        </div>
-        <div class="form-trust-item">
-          <span class="trust-shield"></span>
-          Trusted by 100+ artists
-        </div>
+        <div class="form-trust-item"><span class="trust-shield"></span>Data safely stored</div>
+        <div class="form-trust-item"><span class="trust-shield"></span>Artwork on Cloudinary</div>
+        <div class="form-trust-item"><span class="trust-shield"></span>Trusted by artists</div>
       </div>
     </div>
   </div>
@@ -1100,17 +1060,17 @@
       <p>Be among the first to participate in Assam's most celebrated online art competition</p>
     </div>
     <p class="section-label text-center" style="margin-bottom:1rem;">Sample Artwork Slots</p>
-   <div class="artwork-placeholders">
-  <div class="artwork-ph">
-    <img src="images/i1.jpeg" alt="Artwork 1" style="width:100%; height:100%; object-fit:cover; border-radius:14px;">
-  </div>
-  <div class="artwork-ph">
-    <img src="images/i2.jpeg" alt="Artwork 2" style="width:100%; height:100%; object-fit:cover; border-radius:14px;">
-  </div>
-  <div class="artwork-ph">
-    <img src="images/i3.jpeg" alt="Artwork 3" style="width:100%; height:100%; object-fit:cover; border-radius:14px;">
-  </div>
-</div>
+    <div class="artwork-placeholders">
+      <div class="artwork-ph">
+        <img src="images/i1.jpeg" alt="Artwork 1" style="width:100%; height:100%; object-fit:cover; border-radius:14px;">
+      </div>
+      <div class="artwork-ph">
+        <img src="images/i2.jpeg" alt="Artwork 2" style="width:100%; height:100%; object-fit:cover; border-radius:14px;">
+      </div>
+      <div class="artwork-ph">
+        <img src="images/i3.jpeg" alt="Artwork 3" style="width:100%; height:100%; object-fit:cover; border-radius:14px;">
+      </div>
+    </div>
     <br>
     <div class="text-center" style="margin-top:1.5rem;">
       <a href="#apply" class="btn-primary">Secure Your Spot →</a>
@@ -1137,6 +1097,105 @@
   <p style="font-size:0.8rem; color:rgba(255,255,255,0.4);">For any queries, contact us anytime. We're happy to help.</p>
   <p class="footer-copy">© 2025 Taroka · Made with ❤ in Assam</p>
 </footer>
+
+<!-- ── FORM LOGIC ───────────────────────────────────────── -->
+<script>
+  // Show selected filename in upload area
+  document.getElementById('artwork').addEventListener('change', function () {
+    const file = this.files[0];
+    const area = document.getElementById('uploadArea');
+    const text = document.getElementById('uploadText');
+    if (file) {
+      area.classList.add('has-file');
+      text.innerHTML = `<strong>${file.name}</strong><br><span style="color:var(--orange)">✓ File selected</span>`;
+    }
+  });
+
+  function showError(msg) {
+    const el = document.getElementById('formError');
+    el.textContent = msg;
+    el.classList.add('visible');
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function hideError() {
+    document.getElementById('formError').classList.remove('visible');
+  }
+
+  function setProgress(pct, label) {
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = label;
+  }
+
+  async function handleSubmit() {
+    hideError();
+
+    const name         = document.getElementById('name').value.trim();
+    const email        = document.getElementById('email').value.trim();
+    const phone        = document.getElementById('phone').value.trim();
+    const age          = document.getElementById('age').value.trim();
+    const artworkTitle = document.getElementById('artworkTitle').value.trim();
+    const artworkFile  = document.getElementById('artwork').files[0];
+
+    // Client-side validation
+    if (!name)         return showError('Please enter your full name.');
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+                       return showError('Please enter a valid email address.');
+    if (!phone)        return showError('Please enter your phone number.');
+    if (!age)          return showError('Please enter your age.');
+    if (!artworkTitle) return showError('Please give your artwork a title.');
+    if (!artworkFile)  return showError('Please upload your artwork.');
+
+    const allowedTypes = ['image/jpeg', 'image/png'];
+    if (!allowedTypes.includes(artworkFile.type)) {
+      return showError('Only JPG and PNG files are allowed.');
+    }
+    if (artworkFile.size > 5 * 1024 * 1024) {
+      return showError('File size must be under 5MB.');
+    }
+
+    // Disable button & show progress
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+    document.getElementById('progressWrap').classList.add('visible');
+    setProgress(20, 'Preparing your entry…');
+
+    try {
+      const formData = new FormData();
+      formData.append('name',         name);
+      formData.append('email',        email);
+      formData.append('phone',        phone);
+      formData.append('age',          age);
+      formData.append('artworkTitle', artworkTitle);
+      formData.append('artwork',      artworkFile);
+
+      setProgress(50, 'Uploading artwork…');
+
+      const res  = await fetch('/api/submit', { method: 'POST', body: formData });
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Submission failed. Please try again.');
+      }
+
+      setProgress(100, 'Done!');
+
+      // Show success
+      setTimeout(() => {
+        document.getElementById('formFields').style.display = 'none';
+        document.getElementById('progressWrap').classList.remove('visible');
+        document.getElementById('successBox').classList.add('visible');
+      }, 500);
+
+    } catch (err) {
+      document.getElementById('progressWrap').classList.remove('visible');
+      btn.disabled = false;
+      btn.textContent = 'Submit Entry →';
+      showError(err.message);
+    }
+  }
+</script>
 
 </body>
 </html>
