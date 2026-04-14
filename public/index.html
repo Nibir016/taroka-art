@@ -6,6 +6,8 @@
 <title>Taroka – Bohag Bihu Drawing Competition</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500;600&family=Noto+Serif+Bengali:wght@500&display=swap" rel="stylesheet">
+<!-- Razorpay Checkout SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -72,12 +74,7 @@
     gap: 10px;
   }
 
-  .nav-logo .logo-dot {
-    width: 8px; height: 8px;
-    background: var(--red);
-    border-radius: 50%;
-    display: inline-block;
-  }
+  .nav-logo .logo-dot { width: 8px; height: 8px; background: var(--red); border-radius: 50%; display: inline-block; }
 
   .nav-cta {
     background: var(--orange);
@@ -165,18 +162,8 @@
 
   .hero h1 span { color: #FFD580; font-style: italic; }
 
-  .hero-subtitle {
-    font-size: 1.15rem;
-    color: rgba(255,255,255,0.82);
-    font-weight: 400;
-    margin-bottom: 0.5rem;
-  }
-
-  .hero-tagline {
-    font-size: 0.95rem;
-    color: rgba(255,213,128,0.9);
-    margin-bottom: 1.8rem;
-  }
+  .hero-subtitle { font-size: 1.15rem; color: rgba(255,255,255,0.82); font-weight: 400; margin-bottom: 0.5rem; }
+  .hero-tagline  { font-size: 0.95rem; color: rgba(255,213,128,0.9); margin-bottom: 1.8rem; }
 
   .hero-trust {
     font-size: 0.82rem;
@@ -185,27 +172,10 @@
     letter-spacing: 0.3px;
   }
 
-  .hero-trust span {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-  }
+  .hero-trust span { display: inline-flex; align-items: center; gap: 5px; }
+  .hero-trust span::before { content: ''; width: 6px; height: 6px; background: #4ADE80; border-radius: 50%; display: inline-block; }
 
-  .hero-trust span::before {
-    content: '';
-    width: 6px; height: 6px;
-    background: #4ADE80;
-    border-radius: 50%;
-    display: inline-block;
-  }
-
-  .btn-group {
-    display: flex;
-    gap: 0.9rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 1.4rem;
-  }
+  .btn-group { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.4rem; }
 
   .btn-primary {
     background: var(--orange);
@@ -243,11 +213,7 @@
 
   .btn-secondary:hover { background: rgba(255,255,255,0.2); }
 
-  .urgency {
-    font-size: 0.82rem;
-    color: #FFD580;
-    font-weight: 500;
-  }
+  .urgency { font-size: 0.82rem; color: #FFD580; font-weight: 500; }
 
   section { padding: 4.5rem 1.5rem; }
   .container { max-width: 840px; margin: 0 auto; }
@@ -270,13 +236,7 @@
     margin-bottom: 0.5rem;
   }
 
-  .section-sub {
-    color: var(--text-muted);
-    font-size: 1rem;
-    max-width: 520px;
-    margin: 0 auto 2.5rem;
-    line-height: 1.7;
-  }
+  .section-sub { color: var(--text-muted); font-size: 1rem; max-width: 520px; margin: 0 auto 2.5rem; line-height: 1.7; }
 
   .comp-card {
     background: var(--white);
@@ -289,20 +249,9 @@
     overflow: hidden;
   }
 
-  .comp-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--red), var(--orange), var(--gold));
-  }
+  .comp-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--red), var(--orange), var(--gold)); }
 
-  .comp-card h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    color: var(--text-mid);
-    margin-bottom: 1rem;
-  }
+  .comp-card h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--text-mid); margin-bottom: 1rem; }
 
   .prize-pool {
     font-family: 'Playfair Display', serif;
@@ -314,21 +263,9 @@
     letter-spacing: -1px;
   }
 
-  .prize-sub {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    max-width: 420px;
-    margin: 0 auto 2rem;
-    line-height: 1.65;
-  }
+  .prize-sub { color: var(--text-muted); font-size: 0.95rem; max-width: 420px; margin: 0 auto 2rem; line-height: 1.65; }
 
-  .trust-badges {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-  }
+  .trust-badges { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
 
   .badge {
     display: flex;
@@ -343,21 +280,11 @@
     color: #92400E;
   }
 
-  .badge-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--orange);
-    flex-shrink: 0;
-  }
+  .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
 
   .prizes-section { background: var(--cream-dark); }
 
-  .prizes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.2rem;
-    margin-bottom: 1.5rem;
-  }
+  .prizes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; margin-bottom: 1.5rem; }
 
   .prize-card {
     background: var(--white);
@@ -383,12 +310,7 @@
   .prize-note { font-size: 0.82rem; color: var(--text-muted); text-align: center; margin-top: 0.5rem; }
   .prize-note strong { color: var(--text-mid); }
 
-  .steps-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    position: relative;
-  }
+  .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; position: relative; }
 
   .step-item { text-align: center; padding: 0 0.5rem; animation: fadeUp 0.7s ease both; }
   .step-item:nth-child(2) { animation-delay: 0.1s; }
@@ -425,28 +347,11 @@
 
   .rules-section { background: var(--white); }
 
-  .rules-card {
-    background: var(--cream);
-    border: 1.5px solid var(--border);
-    border-radius: 20px;
-    padding: 2rem 2.2rem;
-  }
+  .rules-card { background: var(--cream); border: 1.5px solid var(--border); border-radius: 20px; padding: 2rem 2.2rem; }
 
-  .rules-list {
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 0.8rem;
-  }
+  .rules-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.8rem; }
 
-  .rules-list li {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 0.9rem;
-    color: var(--text-mid);
-    line-height: 1.55;
-  }
+  .rules-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: var(--text-mid); line-height: 1.55; }
 
   .rule-check {
     width: 18px; height: 18px;
@@ -459,14 +364,9 @@
     justify-content: center;
   }
 
-  .rule-check::after {
-    content: '';
-    width: 6px; height: 4px;
-    border-left: 1.5px solid var(--orange);
-    border-bottom: 1.5px solid var(--orange);
-    transform: rotate(-45deg) translateY(-1px);
-  }
+  .rule-check::after { content: ''; width: 6px; height: 4px; border-left: 1.5px solid var(--orange); border-bottom: 1.5px solid var(--orange); transform: rotate(-45deg) translateY(-1px); }
 
+  /* ── FORM ── */
   .form-section { background: var(--cream-dark); }
 
   .form-card {
@@ -479,29 +379,12 @@
     margin: 0 auto;
   }
 
-  .form-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    margin-bottom: 0.25rem;
-    color: var(--text-dark);
-  }
-
-  .form-card > p {
-    font-size: 0.88rem;
-    color: var(--text-muted);
-    margin-bottom: 1.8rem;
-  }
+  .form-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 0.25rem; color: var(--text-dark); }
+  .form-card > p { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.8rem; }
 
   .form-group { margin-bottom: 1.1rem; }
 
-  .form-group label {
-    display: block;
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--text-mid);
-    margin-bottom: 0.35rem;
-    letter-spacing: 0.2px;
-  }
+  .form-group label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-mid); margin-bottom: 0.35rem; letter-spacing: 0.2px; }
 
   .form-group input,
   .form-group select {
@@ -536,32 +419,30 @@
   .upload-area:hover    { border-color: var(--orange); background: #FFF3E8; }
   .upload-area.has-file { border-color: var(--orange); background: #FFF3E8; }
 
-  .upload-area input[type="file"] {
-    position: absolute; inset: 0;
-    opacity: 0; cursor: pointer;
-    width: 100%; height: 100%;
-  }
+  .upload-area input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
 
-  .upload-icon {
-    width: 36px; height: 36px;
-    margin: 0 auto 0.5rem;
-    background: var(--orange-light);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  .upload-icon::before {
-    content: '';
-    width: 12px; height: 12px;
-    border: 2px solid var(--orange);
-    border-radius: 2px;
-    border-bottom: none;
-    position: relative;
-    top: 2px;
-  }
+  .upload-icon { width: 36px; height: 36px; margin: 0 auto 0.5rem; background: var(--orange-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .upload-icon::before { content: ''; width: 12px; height: 12px; border: 2px solid var(--orange); border-radius: 2px; border-bottom: none; position: relative; top: 2px; }
 
   .upload-text { font-size: 0.85rem; color: var(--text-muted); }
   .upload-text strong { color: var(--orange); }
+
+  /* Fee note */
+  .fee-note {
+    background: var(--orange-pale);
+    border: 1px solid var(--orange-light);
+    border-radius: 10px;
+    padding: 0.8rem 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1.4rem 0 0.4rem;
+  }
+
+  .fee-note .fee-label { font-size: 0.85rem; color: var(--text-muted); }
+  .fee-note .fee-amount { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--orange); }
+
+  .fee-subtext { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1.2rem; text-align: right; }
 
   .btn-submit {
     display: block;
@@ -578,76 +459,38 @@
     transition: all 0.2s;
     box-shadow: 0 4px 20px rgba(249,115,22,0.35);
     margin-bottom: 1rem;
-    margin-top: 1.4rem;
   }
 
   .btn-submit:hover:not(:disabled) { background: #EA6A0A; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(249,115,22,0.45); }
   .btn-submit:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
 
+  /* Progress bar */
   .progress-wrap { display: none; margin-bottom: 1rem; }
   .progress-wrap.visible { display: block; }
 
-  .progress-bar-bg {
-    height: 6px;
-    background: var(--orange-light);
-    border-radius: 99px;
-    overflow: hidden;
-  }
+  .progress-bar-bg { height: 6px; background: var(--orange-light); border-radius: 99px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--orange); border-radius: 99px; width: 0%; transition: width 0.4s ease; }
+  .progress-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.4rem; text-align: center; }
 
-  .progress-bar-fill {
-    height: 100%;
-    background: var(--orange);
-    border-radius: 99px;
-    width: 0%;
-    transition: width 0.4s ease;
-  }
-
-  .progress-label {
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    margin-top: 0.4rem;
-    text-align: center;
-  }
-
+  /* Success state */
   .success-box { display: none; background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 16px; padding: 2rem; text-align: center; }
   .success-box.visible { display: block; }
 
-  .success-icon {
-    width: 56px; height: 56px;
-    background: #DCFCE7;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1rem;
-    font-size: 1.6rem;
-  }
+  .success-icon { width: 56px; height: 56px; background: #DCFCE7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.6rem; }
 
   .success-box h4 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #166534; margin-bottom: 0.4rem; }
   .success-box p  { font-size: 0.88rem; color: #15803D; }
+  .success-payment-id { font-size: 0.75rem; color: #86EFAC; margin-top: 0.6rem; font-family: monospace; }
 
+  /* Error */
   .form-error { display: none; background: #FEF2F2; border: 1.5px solid #FCA5A5; border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.85rem; color: #DC2626; margin-bottom: 1rem; text-align: center; }
   .form-error.visible { display: block; }
 
-  .form-trust { display: flex; align-items: center; justify-content: center; gap: 1.2rem; flex-wrap: wrap; }
-
+  .form-trust { display: flex; align-items: center; justify-content: center; gap: 1.2rem; flex-wrap: wrap; margin-top: 0.5rem; }
   .form-trust-item { font-size: 0.76rem; color: var(--text-muted); display: flex; align-items: center; gap: 5px; }
 
-  .trust-shield {
-    width: 14px; height: 14px;
-    background: #DCFCE7;
-    border-radius: 3px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .trust-shield::after {
-    content: '';
-    width: 6px; height: 4px;
-    border-left: 1.5px solid #16A34A;
-    border-bottom: 1.5px solid #16A34A;
-    transform: rotate(-45deg) translateY(-1px);
-  }
+  .trust-shield { width: 14px; height: 14px; background: #DCFCE7; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .trust-shield::after { content: ''; width: 6px; height: 4px; border-left: 1.5px solid #16A34A; border-bottom: 1.5px solid #16A34A; transform: rotate(-45deg) translateY(-1px); }
 
   .proof-section { background: var(--white); }
 
@@ -662,40 +505,27 @@
     overflow: hidden;
   }
 
-  .proof-banner::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.12) 0%, transparent 60%);
-  }
-
+  .proof-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.12) 0%, transparent 60%); }
   .proof-banner h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.4rem; position: relative; }
   .proof-banner p  { opacity: 0.85; font-size: 0.95rem; position: relative; }
 
   .artwork-placeholders { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-
   .artwork-ph { aspect-ratio: 4/5; border-radius: 14px; overflow: hidden; border: 1.5px solid var(--orange-light); }
 
   footer { background: var(--text-dark); color: rgba(255,255,255,0.7); text-align: center; padding: 2.5rem 1.5rem; }
-
   .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--orange); margin-bottom: 0.8rem; }
-
   .footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
   .footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
   .footer-links a:hover { color: var(--orange); }
-
   .footer-follow { font-size: 0.82rem; color: rgba(255,255,255,0.45); margin-bottom: 0.5rem; }
-
   .instagram-link { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); padding: 0.4rem 1rem; border-radius: 40px; color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.82rem; margin-bottom: 1rem; transition: background 0.2s; }
   .instagram-link:hover { background: rgba(255,255,255,0.12); }
-
   .insta-icon { width: 16px; height: 16px; border: 1.5px solid currentColor; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; }
   .insta-icon::before { content: ''; width: 6px; height: 6px; border: 1px solid currentColor; border-radius: 50%; }
   .insta-icon::after  { content: ''; width: 2px; height: 2px; background: currentColor; border-radius: 50%; position: absolute; top: 2px; right: 2px; }
-
   .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.3); margin-top: 1.2rem; }
 
   .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--orange-light), transparent); margin: 0; }
-
   .text-center { text-align: center; }
 
   @media (max-width: 600px) {
@@ -800,12 +630,12 @@
       <div class="step-item">
         <div class="step-num">1</div>
         <div class="step-title">Fill the Form</div>
-        <p class="step-desc">Fill the submission form and upload your original artwork in JPG or PNG format.</p>
+        <p class="step-desc">Fill in your details and upload your original artwork in JPG or PNG format.</p>
       </div>
       <div class="step-item">
         <div class="step-num">2</div>
-        <div class="step-title">Submit Entry</div>
-        <p class="step-desc">Hit submit and your entry is locked in. You'll see a confirmation right on the page.</p>
+        <div class="step-title">Pay ₹99</div>
+        <p class="step-desc">Complete the ₹99 entry fee securely via Razorpay — UPI, cards, and net banking accepted.</p>
       </div>
       <div class="step-item">
         <div class="step-num">3</div>
@@ -844,7 +674,7 @@
   <div class="container text-center">
     <p class="section-label">Registration</p>
     <h2 class="section-title">Submit Your Entry</h2>
-    <p class="section-sub" style="margin-bottom: 2rem;">Fill in your details and upload your artwork to secure your spot.</p>
+    <p class="section-sub" style="margin-bottom: 2rem;">Fill in your details, upload your artwork, then pay the ₹99 entry fee to lock in your spot.</p>
 
     <div class="form-card">
       <h3>Entry Form</h3>
@@ -884,28 +714,37 @@
           </div>
         </div>
 
+        <div class="fee-note">
+          <span class="fee-label">Entry Fee</span>
+          <span class="fee-amount">₹99</span>
+        </div>
+        <p class="fee-subtext">Paid securely via Razorpay · UPI, Cards, Net Banking</p>
+
+        <!-- Progress bar (shown after payment succeeds, during upload) -->
         <div class="progress-wrap" id="progressWrap">
           <div class="progress-bar-bg">
             <div class="progress-bar-fill" id="progressFill"></div>
           </div>
-          <p class="progress-label" id="progressLabel">Uploading…</p>
+          <p class="progress-label" id="progressLabel">Saving your entry…</p>
         </div>
 
         <button class="btn-submit" id="submitBtn" onclick="handleSubmit()">
-          Submit Entry →
+          Pay ₹99 &amp; Submit →
         </button>
       </div>
 
+      <!-- Success state -->
       <div class="success-box" id="successBox">
         <div class="success-icon">🎉</div>
         <h4>Entry Submitted!</h4>
-        <p>Your artwork has been received. Good luck — winners will be announced on our Instagram page.</p>
+        <p>Payment confirmed and your artwork has been received. Good luck — winners will be announced on our Instagram page.</p>
+        <p class="success-payment-id" id="successPaymentId"></p>
       </div>
 
       <div class="form-trust">
-        <div class="form-trust-item"><span class="trust-shield"></span>Data safely stored</div>
+        <div class="form-trust-item"><span class="trust-shield"></span>Secured by Razorpay</div>
         <div class="form-trust-item"><span class="trust-shield"></span>Artwork on Cloudinary</div>
-        <div class="form-trust-item"><span class="trust-shield"></span>Trusted by artists</div>
+        <div class="form-trust-item"><span class="trust-shield"></span>Data safely stored</div>
       </div>
     </div>
   </div>
@@ -932,7 +771,6 @@
         <img src="images/i3.jpeg" alt="Artwork 3" style="width:100%; height:100%; object-fit:cover; border-radius:14px;">
       </div>
     </div>
-    <br>
     <div class="text-center" style="margin-top:1.5rem;">
       <a href="#apply" class="btn-primary">Secure Your Spot →</a>
     </div>
@@ -956,7 +794,9 @@
   <p class="footer-copy">© 2025 Taroka · Made with ❤ in Assam</p>
 </footer>
 
+<!-- ── FORM + PAYMENT LOGIC ───────────────────────────────── -->
 <script>
+  // ── File picker display ──────────────────────────────────
   document.getElementById('artwork').addEventListener('change', function () {
     const file = this.files[0];
     if (!file) return;
@@ -965,6 +805,7 @@
       `<strong>${file.name}</strong><br><span style="color:var(--orange)">✓ File selected</span>`;
   });
 
+  // ── Helpers ──────────────────────────────────────────────
   function showError(msg) {
     const el = document.getElementById('formError');
     el.textContent = msg;
@@ -981,9 +822,17 @@
     document.getElementById('progressLabel').textContent = label;
   }
 
+  function setBtn(text, disabled) {
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = text;
+    btn.disabled = disabled;
+  }
+
+  // ── Main handler ─────────────────────────────────────────
   async function handleSubmit() {
     hideError();
 
+    // 1. Collect + validate fields
     const name         = document.getElementById('name').value.trim();
     const email        = document.getElementById('email').value.trim();
     const phone        = document.getElementById('phone').value.trim();
@@ -1003,43 +852,96 @@
     if (artworkFile.size > 5 * 1024 * 1024)
                        return showError('File size must be under 5MB.');
 
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.textContent = 'Submitting…';
-    document.getElementById('progressWrap').classList.add('visible');
-    setProgress(20, 'Preparing your entry…');
+    // 2. Create Razorpay order on the server
+    setBtn('Creating order…', true);
 
+    let orderData;
     try {
-      const formData = new FormData();
-      formData.append('name',         name);
-      formData.append('email',        email);
-      formData.append('phone',        phone);
-      formData.append('age',          age);
-      formData.append('artworkTitle', artworkTitle);
-      formData.append('artwork',      artworkFile);
-
-      setProgress(50, 'Uploading artwork…');
-
-      // ✅ Relative URL — works on Railway because frontend is served by same Express server
-      const res  = await fetch('/api/submit', { method: 'POST', body: formData });
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.error || 'Submission failed. Please try again.');
-
-      setProgress(100, 'Done!');
-
-      setTimeout(() => {
-        document.getElementById('formFields').style.display = 'none';
-        document.getElementById('progressWrap').classList.remove('visible');
-        document.getElementById('successBox').classList.add('visible');
-      }, 500);
-
+      const res = await fetch('/api/create-order', {
+        method : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body   : JSON.stringify({ email }),
+      });
+      orderData = await res.json();
+      if (!res.ok) throw new Error(orderData.error || 'Could not initiate payment.');
     } catch (err) {
-      document.getElementById('progressWrap').classList.remove('visible');
-      btn.disabled = false;
-      btn.textContent = 'Submit Entry →';
-      showError(err.message);
+      setBtn('Pay ₹99 & Submit →', false);
+      return showError(err.message);
     }
+
+    // 3. Open Razorpay checkout
+    const options = {
+      key         : orderData.keyId,
+      amount      : orderData.amount,
+      currency    : orderData.currency,
+      name        : 'Taroka',
+      description : 'Bohag Bihu Drawing Competition – Entry Fee',
+      order_id    : orderData.orderId,
+      prefill     : { name, email, contact: phone },
+      theme       : { color: '#F97316' },
+
+      // ── Called on successful payment ──
+      handler: async function (response) {
+        // 4. Show progress bar and save entry
+        document.getElementById('progressWrap').classList.add('visible');
+        setProgress(30, 'Payment confirmed! Uploading artwork…');
+        setBtn('Saving entry…', true);
+
+        try {
+          const formData = new FormData();
+          formData.append('name',                 name);
+          formData.append('email',                email);
+          formData.append('phone',                phone);
+          formData.append('age',                  age);
+          formData.append('artworkTitle',         artworkTitle);
+          formData.append('artwork',              artworkFile);
+          formData.append('razorpay_order_id',   response.razorpay_order_id);
+          formData.append('razorpay_payment_id', response.razorpay_payment_id);
+          formData.append('razorpay_signature',  response.razorpay_signature);
+
+          setProgress(60, 'Uploading artwork to cloud…');
+
+          const submitRes  = await fetch('/api/submit', { method: 'POST', body: formData });
+          const submitData = await submitRes.json();
+
+          if (!submitRes.ok) throw new Error(submitData.error || 'Submission failed after payment.');
+
+          setProgress(100, 'All done!');
+
+          // 5. Show success
+          setTimeout(() => {
+            document.getElementById('formFields').style.display = 'none';
+            document.getElementById('progressWrap').classList.remove('visible');
+            const successBox = document.getElementById('successBox');
+            successBox.classList.add('visible');
+            document.getElementById('successPaymentId').textContent =
+              'Payment ID: ' + response.razorpay_payment_id;
+            successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 600);
+
+        } catch (err) {
+          document.getElementById('progressWrap').classList.remove('visible');
+          setBtn('Pay ₹99 & Submit →', false);
+          showError('Payment was successful but saving your entry failed. Please contact hello@taroka.art with your payment ID: ' + response.razorpay_payment_id);
+        }
+      },
+
+      // ── Called if user closes modal without paying ──
+      modal: {
+        ondismiss: function () {
+          setBtn('Pay ₹99 & Submit →', false);
+        }
+      }
+    };
+
+    const rzp = new Razorpay(options);
+
+    rzp.on('payment.failed', function (response) {
+      setBtn('Pay ₹99 & Submit →', false);
+      showError('Payment failed: ' + (response.error.description || 'Please try again.'));
+    });
+
+    rzp.open();
   }
 </script>
 
