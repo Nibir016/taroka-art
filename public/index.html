@@ -467,7 +467,6 @@
     transform: rotate(-45deg) translateY(-1px);
   }
 
-  /* ── FORM ── */
   .form-section { background: var(--cream-dark); }
 
   .form-card {
@@ -520,12 +519,8 @@
   }
 
   .form-group input:focus,
-  .form-group select:focus {
-    border-color: var(--orange);
-    background: #fff;
-  }
-
-  .form-group input.error { border-color: var(--red); }
+  .form-group select:focus { border-color: var(--orange); background: #fff; }
+  .form-group input.error  { border-color: var(--red); }
 
   .upload-area {
     border: 2px dashed rgba(249,115,22,0.35);
@@ -538,7 +533,7 @@
     position: relative;
   }
 
-  .upload-area:hover  { border-color: var(--orange); background: #FFF3E8; }
+  .upload-area:hover    { border-color: var(--orange); background: #FFF3E8; }
   .upload-area.has-file { border-color: var(--orange); background: #FFF3E8; }
 
   .upload-area input[type="file"] {
@@ -589,12 +584,7 @@
   .btn-submit:hover:not(:disabled) { background: #EA6A0A; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(249,115,22,0.45); }
   .btn-submit:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
 
-  /* ── Progress bar ── */
-  .progress-wrap {
-    display: none;
-    margin-bottom: 1rem;
-  }
-
+  .progress-wrap { display: none; margin-bottom: 1rem; }
   .progress-wrap.visible { display: block; }
 
   .progress-bar-bg {
@@ -619,16 +609,7 @@
     text-align: center;
   }
 
-  /* ── Success state ── */
-  .success-box {
-    display: none;
-    background: #F0FDF4;
-    border: 1.5px solid #86EFAC;
-    border-radius: 16px;
-    padding: 2rem;
-    text-align: center;
-  }
-
+  .success-box { display: none; background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 16px; padding: 2rem; text-align: center; }
   .success-box.visible { display: block; }
 
   .success-icon {
@@ -642,45 +623,15 @@
     font-size: 1.6rem;
   }
 
-  .success-box h4 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    color: #166534;
-    margin-bottom: 0.4rem;
-  }
+  .success-box h4 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #166534; margin-bottom: 0.4rem; }
+  .success-box p  { font-size: 0.88rem; color: #15803D; }
 
-  .success-box p { font-size: 0.88rem; color: #15803D; }
-
-  /* ── Error message ── */
-  .form-error {
-    display: none;
-    background: #FEF2F2;
-    border: 1.5px solid #FCA5A5;
-    border-radius: 10px;
-    padding: 0.75rem 1rem;
-    font-size: 0.85rem;
-    color: #DC2626;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-
+  .form-error { display: none; background: #FEF2F2; border: 1.5px solid #FCA5A5; border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.85rem; color: #DC2626; margin-bottom: 1rem; text-align: center; }
   .form-error.visible { display: block; }
 
-  .form-trust {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.2rem;
-    flex-wrap: wrap;
-  }
+  .form-trust { display: flex; align-items: center; justify-content: center; gap: 1.2rem; flex-wrap: wrap; }
 
-  .form-trust-item {
-    font-size: 0.76rem;
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
+  .form-trust-item { font-size: 0.76rem; color: var(--text-muted); display: flex; align-items: center; gap: 5px; }
 
   .trust-shield {
     width: 14px; height: 14px;
@@ -717,108 +668,33 @@
     background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.12) 0%, transparent 60%);
   }
 
-  .proof-banner h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin-bottom: 0.4rem;
-    position: relative;
-  }
+  .proof-banner h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.4rem; position: relative; }
+  .proof-banner p  { opacity: 0.85; font-size: 0.95rem; position: relative; }
 
-  .proof-banner p { opacity: 0.85; font-size: 0.95rem; position: relative; }
+  .artwork-placeholders { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 
-  .artwork-placeholders {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-  }
+  .artwork-ph { aspect-ratio: 4/5; border-radius: 14px; overflow: hidden; border: 1.5px solid var(--orange-light); }
 
-  .artwork-ph {
-    aspect-ratio: 4/5;
-    border-radius: 14px;
-    overflow: hidden;
-    border: 1.5px solid var(--orange-light);
-  }
-
-  footer {
-    background: var(--text-dark);
-    color: rgba(255,255,255,0.7);
-    text-align: center;
-    padding: 2.5rem 1.5rem;
-  }
+  footer { background: var(--text-dark); color: rgba(255,255,255,0.7); text-align: center; padding: 2.5rem 1.5rem; }
 
   .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--orange); margin-bottom: 0.8rem; }
 
-  .footer-links {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-  }
-
-  .footer-links a {
-    color: rgba(255,255,255,0.6);
-    text-decoration: none;
-    font-size: 0.85rem;
-    transition: color 0.2s;
-  }
-
+  .footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
   .footer-links a:hover { color: var(--orange); }
 
   .footer-follow { font-size: 0.82rem; color: rgba(255,255,255,0.45); margin-bottom: 0.5rem; }
 
-  .instagram-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.12);
-    padding: 0.4rem 1rem;
-    border-radius: 40px;
-    color: rgba(255,255,255,0.75);
-    text-decoration: none;
-    font-size: 0.82rem;
-    margin-bottom: 1rem;
-    transition: background 0.2s;
-  }
-
+  .instagram-link { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); padding: 0.4rem 1rem; border-radius: 40px; color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.82rem; margin-bottom: 1rem; transition: background 0.2s; }
   .instagram-link:hover { background: rgba(255,255,255,0.12); }
 
-  .insta-icon {
-    width: 16px; height: 16px;
-    border: 1.5px solid currentColor;
-    border-radius: 4px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    position: relative;
-  }
-
-  .insta-icon::before {
-    content: '';
-    width: 6px; height: 6px;
-    border: 1px solid currentColor;
-    border-radius: 50%;
-  }
-
-  .insta-icon::after {
-    content: '';
-    width: 2px; height: 2px;
-    background: currentColor;
-    border-radius: 50%;
-    position: absolute;
-    top: 2px; right: 2px;
-  }
+  .insta-icon { width: 16px; height: 16px; border: 1.5px solid currentColor; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; }
+  .insta-icon::before { content: ''; width: 6px; height: 6px; border: 1px solid currentColor; border-radius: 50%; }
+  .insta-icon::after  { content: ''; width: 2px; height: 2px; background: currentColor; border-radius: 50%; position: absolute; top: 2px; right: 2px; }
 
   .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.3); margin-top: 1.2rem; }
 
-  .divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--orange-light), transparent);
-    margin: 0;
-  }
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--orange-light), transparent); margin: 0; }
 
   .text-center { text-align: center; }
 
@@ -826,8 +702,8 @@
     .steps-grid .step-num::after { display: none; }
     .artwork-placeholders { grid-template-columns: 1fr 1fr; }
     .artwork-placeholders .artwork-ph:last-child { display: none; }
-    .comp-card  { padding: 2rem 1.2rem; }
-    .form-card  { padding: 1.8rem 1.2rem; }
+    .comp-card { padding: 2rem 1.2rem; }
+    .form-card { padding: 1.8rem 1.2rem; }
   }
 </style>
 </head>
@@ -837,10 +713,7 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">
-    <span class="logo-dot"></span>
-    Taroka
-  </div>
+  <div class="nav-logo"><span class="logo-dot"></span>Taroka</div>
   <a href="#apply" class="nav-cta">Apply Now →</a>
 </nav>
 
@@ -853,9 +726,7 @@
     <h1><span>Taroka</span></h1>
     <p class="hero-subtitle">Bohag Bihu Drawing Competition</p>
     <p class="hero-tagline">Celebrate Rongali Bihu through your creativity</p>
-    <p class="hero-trust">
-      <span>Open for all artists across Assam</span>
-    </p>
+    <p class="hero-trust"><span>Open for all artists across Assam</span></p>
     <div class="btn-group">
       <a href="#apply" class="btn-primary">Apply Now →</a>
       <a href="#prizes" class="btn-secondary">View Prizes</a>
@@ -872,13 +743,11 @@
     <div class="comp-card">
       <h2>Taroka Drawing Competition</h2>
       <div class="prize-pool">₹25,000+</div>
-      <p class="prize-sub">
-        Submit your artwork inspired by Bohag Bihu and stand a chance to win exciting cash prizes and get featured on our official page.
-      </p>
+      <p class="prize-sub">Submit your artwork inspired by Bohag Bihu and stand a chance to win exciting cash prizes and get featured on our official page.</p>
       <div class="trust-badges">
-        <div class="badge"><span class="badge-dot"></span>Secure Payment</div>
         <div class="badge"><span class="badge-dot"></span>Fair Judging</div>
         <div class="badge"><span class="badge-dot"></span>All Assam Participation</div>
+        <div class="badge"><span class="badge-dot"></span>Digital Certificate</div>
       </div>
       <div class="btn-group">
         <a href="#apply" class="btn-primary">Apply Now →</a>
@@ -949,6 +818,7 @@
 
 <div class="divider"></div>
 
+<!-- RULES -->
 <section class="rules-section">
   <div class="container text-center">
     <p class="section-label">Guidelines</p>
@@ -980,36 +850,29 @@
       <h3>Entry Form</h3>
       <p>All fields are required. Your data is সুরক্ষিত (safe).</p>
 
-      <!-- Error message -->
       <div class="form-error" id="formError"></div>
 
-      <!-- The actual form fields (hidden after success) -->
       <div id="formFields">
         <div class="form-group">
           <label>Full Name *</label>
           <input type="text" id="name" placeholder="Your full name">
         </div>
-
         <div class="form-group">
           <label>Email Address *</label>
           <input type="email" id="email" placeholder="you@example.com">
         </div>
-
         <div class="form-group">
           <label>Phone Number *</label>
           <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX">
         </div>
-
         <div class="form-group">
           <label>Age *</label>
           <input type="number" id="age" placeholder="Your age" min="1" max="120">
         </div>
-
         <div class="form-group">
           <label>Artwork Title *</label>
           <input type="text" id="artworkTitle" placeholder="Give your artwork a name">
         </div>
-
         <div class="form-group">
           <label>Upload Artwork *</label>
           <div class="upload-area" id="uploadArea">
@@ -1021,7 +884,6 @@
           </div>
         </div>
 
-        <!-- Progress bar -->
         <div class="progress-wrap" id="progressWrap">
           <div class="progress-bar-bg">
             <div class="progress-bar-fill" id="progressFill"></div>
@@ -1034,7 +896,6 @@
         </button>
       </div>
 
-      <!-- Success state -->
       <div class="success-box" id="successBox">
         <div class="success-icon">🎉</div>
         <h4>Entry Submitted!</h4>
@@ -1085,10 +946,7 @@
   <div class="footer-logo">Taroka</div>
   <p style="font-size:0.82rem; margin-bottom:1rem;">Bohag Bihu Drawing Competition · Assam</p>
   <p class="footer-follow">Follow us for updates</p>
-  <a href="#" class="instagram-link">
-    <span class="insta-icon"></span>
-    @taroka.art
-  </a>
+  <a href="#" class="instagram-link"><span class="insta-icon"></span>@taroka.art</a>
   <div class="footer-links">
     <a href="mailto:hello@taroka.art">hello@taroka.art</a>
     <a href="#prizes">Prizes</a>
@@ -1098,17 +956,13 @@
   <p class="footer-copy">© 2025 Taroka · Made with ❤ in Assam</p>
 </footer>
 
-<!-- ── FORM LOGIC ───────────────────────────────────────── -->
 <script>
-  // Show selected filename in upload area
   document.getElementById('artwork').addEventListener('change', function () {
     const file = this.files[0];
-    const area = document.getElementById('uploadArea');
-    const text = document.getElementById('uploadText');
-    if (file) {
-      area.classList.add('has-file');
-      text.innerHTML = `<strong>${file.name}</strong><br><span style="color:var(--orange)">✓ File selected</span>`;
-    }
+    if (!file) return;
+    document.getElementById('uploadArea').classList.add('has-file');
+    document.getElementById('uploadText').innerHTML =
+      `<strong>${file.name}</strong><br><span style="color:var(--orange)">✓ File selected</span>`;
   });
 
   function showError(msg) {
@@ -1137,7 +991,6 @@
     const artworkTitle = document.getElementById('artworkTitle').value.trim();
     const artworkFile  = document.getElementById('artwork').files[0];
 
-    // Client-side validation
     if (!name)         return showError('Please enter your full name.');
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
                        return showError('Please enter a valid email address.');
@@ -1145,16 +998,11 @@
     if (!age)          return showError('Please enter your age.');
     if (!artworkTitle) return showError('Please give your artwork a title.');
     if (!artworkFile)  return showError('Please upload your artwork.');
+    if (!['image/jpeg','image/png'].includes(artworkFile.type))
+                       return showError('Only JPG and PNG files are allowed.');
+    if (artworkFile.size > 5 * 1024 * 1024)
+                       return showError('File size must be under 5MB.');
 
-    const allowedTypes = ['image/jpeg', 'image/png'];
-    if (!allowedTypes.includes(artworkFile.type)) {
-      return showError('Only JPG and PNG files are allowed.');
-    }
-    if (artworkFile.size > 5 * 1024 * 1024) {
-      return showError('File size must be under 5MB.');
-    }
-
-    // Disable button & show progress
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
     btn.textContent = 'Submitting…';
@@ -1172,16 +1020,14 @@
 
       setProgress(50, 'Uploading artwork…');
 
+      // ✅ Relative URL — works on Railway because frontend is served by same Express server
       const res  = await fetch('/api/submit', { method: 'POST', body: formData });
       const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.error || 'Submission failed. Please try again.');
-      }
+      if (!res.ok) throw new Error(data.error || 'Submission failed. Please try again.');
 
       setProgress(100, 'Done!');
 
-      // Show success
       setTimeout(() => {
         document.getElementById('formFields').style.display = 'none';
         document.getElementById('progressWrap').classList.remove('visible');

@@ -8,35 +8,52 @@ const path       = require('path');
 
 const app = express();
 
-// ── CLOUDINARY ──────────────────────────────────────────────
+// ── ENV VALIDATION (catches Railway mismatches instantly) ────
+const REQUIRED_VARS = [
+  'CLOUDINARY_CLOUD_NAME',
+  'CLOUDINARY_API_KEY',
+  'CLOUDINARY_API_SECRET',
+  'MONGO_URI',
+];
+
+const missing = REQUIRED_VARS.filter(v => !process.env[v]);
+if (missing.length) {
+  console.error('❌  Missing environment variables:', missing.join(', '));
+  console.error('    Check your Railway Variables tab — names must match exactly.');
+  process.exit(1);
+}
+
+console.log('✅  All env vars found:', REQUIRED_VARS.join(', '));
+
+// ── CLOUDINARY ───────────────────────────────────────────────
 cloudinary.config({
   cloud_name : process.env.CLOUDINARY_CLOUD_NAME,
   api_key    : process.env.CLOUDINARY_API_KEY,
   api_secret : process.env.CLOUDINARY_API_SECRET,
 });
 
-// ── MONGODB ─────────────────────────────────────────────────
+// ── MONGODB ──────────────────────────────────────────────────
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅  MongoDB connected'))
   .catch(err => { console.error('❌  MongoDB error:', err.message); process.exit(1); });
 
 const entrySchema = new mongoose.Schema({
-  name             : { type: String, required: true, trim: true },
-  email            : { type: String, required: true, lowercase: true, trim: true },
-  phone            : { type: String, required: true },
-  age              : { type: String, required: true },
-  artworkTitle     : { type: String, required: true, trim: true },
-  artworkUrl       : { type: String, required: true },
+  name              : { type: String, required: true, trim: true },
+  email             : { type: String, required: true, lowercase: true, trim: true },
+  phone             : { type: String, required: true },
+  age               : { type: String, required: true },
+  artworkTitle      : { type: String, required: true, trim: true },
+  artworkUrl        : { type: String, required: true },
   cloudinaryPublicId: { type: String },
-  submittedAt      : { type: Date, default: Date.now },
+  submittedAt       : { type: Date, default: Date.now },
 });
 
 const Entry = mongoose.model('Entry', entrySchema);
 
-// ── MULTER (memory storage → stream to Cloudinary) ──────────
+// ── MULTER (memory storage → stream to Cloudinary) ───────────
 const upload = multer({
-  storage: multer.memoryStorage(),
-  limits : { fileSize: 5 * 1024 * 1024 },   // 5 MB
+  storage   : multer.memoryStorage(),
+  limits    : { fileSize: 5 * 1024 * 1024 },
   fileFilter: (_req, file, cb) => {
     const allowed = ['image/jpeg', 'image/png'];
     if (allowed.includes(file.mimetype)) cb(null, true);
@@ -44,22 +61,18 @@ const upload = multer({
   },
 });
 
-// ── MIDDLEWARE ──────────────────────────────────────────────
+// ── MIDDLEWARE ───────────────────────────────────────────────
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ── ROUTES ──────────────────────────────────────────────────
+// ── ROUTES ───────────────────────────────────────────────────
 
-/**
- * POST /api/submit
- * Body (multipart/form-data): name, email, phone, age, artworkTitle, artwork (file)
- */
+// POST /api/submit
 app.post('/api/submit', upload.single('artwork'), async (req, res) => {
   try {
     const { name, email, phone, age, artworkTitle } = req.body;
 
-    // Basic validation
     if (!name || !email || !phone || !age || !artworkTitle) {
       return res.status(400).json({ error: 'All fields are required.' });
     }
@@ -67,7 +80,7 @@ app.post('/api/submit', upload.single('artwork'), async (req, res) => {
       return res.status(400).json({ error: 'Artwork file is required.' });
     }
 
-    // Check duplicate email
+    // Duplicate check
     const existing = await Entry.findOne({ email });
     if (existing) {
       return res.status(409).json({ error: 'An entry with this email already exists.' });
@@ -79,7 +92,7 @@ app.post('/api/submit', upload.single('artwork'), async (req, res) => {
         {
           folder        : 'taroka-bohag-bihu-2025',
           resource_type : 'image',
-          transformation: [{ width: 2000, crop: 'limit' }], // cap large images
+          transformation: [{ width: 2000, crop: 'limit' }],
         },
         (err, result) => (err ? reject(err) : resolve(result))
       );
@@ -97,7 +110,7 @@ app.post('/api/submit', upload.single('artwork'), async (req, res) => {
       cloudinaryPublicId: cloudResult.public_id,
     });
 
-    console.log(`✅  New entry saved: ${entry._id} — ${name}`);
+    console.log(`✅  New entry: ${entry._id} — ${name} — ${cloudResult.secure_url}`);
 
     res.status(201).json({
       success   : true,
@@ -112,10 +125,7 @@ app.post('/api/submit', upload.single('artwork'), async (req, res) => {
   }
 });
 
-/**
- * GET /api/entries
- * Returns all submissions (admin use)
- */
+// GET /api/entries  (admin)
 app.get('/api/entries', async (_req, res) => {
   try {
     const entries = await Entry.find().sort({ submittedAt: -1 }).select('-__v');
@@ -125,9 +135,7 @@ app.get('/api/entries', async (_req, res) => {
   }
 });
 
-/**
- * GET /api/entries/:id
- */
+// GET /api/entries/:id  (admin)
 app.get('/api/entries/:id', async (req, res) => {
   try {
     const entry = await Entry.findById(req.params.id).select('-__v');
@@ -138,12 +146,12 @@ app.get('/api/entries/:id', async (req, res) => {
   }
 });
 
-// ── 404 fallback → serve the SPA ────────────────────────────
+// Fallback → serve index.html
 app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// ── START ────────────────────────────────────────────────────
+// ── START ─────────────────────────────────────────────────────
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () =>
   console.log(`🚀  Taroka server running → http://localhost:${PORT}`)
