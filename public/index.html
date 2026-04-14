@@ -6,7 +6,6 @@
 <title>Taroka – Bohag Bihu Drawing Competition</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500;600&family=Noto+Serif+Bengali:wght@500&display=swap" rel="stylesheet">
-<!-- Razorpay Checkout SDK -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -284,7 +283,13 @@
 
   .prizes-section { background: var(--cream-dark); }
 
-  .prizes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; margin-bottom: 1.5rem; }
+  /* Updated prize grid for 3 tiers with sub-winners */
+  .prizes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
 
   .prize-card {
     background: var(--white);
@@ -306,9 +311,107 @@
   .prize-rank   { font-size: 0.78rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem; }
   .prize-amount { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--text-dark); line-height: 1.1; }
   .prize-card.gold-prize .prize-amount { color: var(--gold); }
+  .prize-winners { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.4rem; font-weight: 500; }
+  .prize-each   { font-size: 0.75rem; color: var(--orange); margin-top: 0.2rem; font-weight: 600; }
 
   .prize-note { font-size: 0.82rem; color: var(--text-muted); text-align: center; margin-top: 0.5rem; }
   .prize-note strong { color: var(--text-mid); }
+
+  /* Media & Recognition section */
+  .media-section { background: var(--white); }
+
+  .media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .media-card {
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-radius: 18px;
+    padding: 1.8rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .media-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(249,115,22,0.1); }
+
+  .media-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .media-card.card-press::before  { background: #3B82F6; }
+  .media-card.card-digital::before { background: var(--orange); }
+  .media-card.card-recognition::before { background: var(--gold); }
+
+  .media-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .media-card.card-press .media-icon      { background: #EFF6FF; }
+  .media-card.card-digital .media-icon    { background: var(--orange-pale); }
+  .media-card.card-recognition .media-icon { background: #FFFBEB; }
+
+  .media-card h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--text-dark); margin-bottom: 0.5rem; }
+  .media-card p  { font-size: 0.875rem; color: var(--text-muted); line-height: 1.65; }
+
+  /* Certificates section */
+  .cert-section { background: var(--cream-dark); }
+
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .cert-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 18px;
+    padding: 1.8rem 1.5rem;
+    text-align: center;
+    transition: transform 0.2s;
+  }
+
+  .cert-card:hover { transform: translateY(-3px); }
+
+  .cert-icon-wrap {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    background: var(--orange-pale);
+    border: 1.5px solid var(--orange-light);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.4rem;
+  }
+
+  .cert-card h4 { font-size: 0.95rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.4rem; }
+  .cert-card p  { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+
+  .cert-pill {
+    display: inline-block;
+    background: #F0FDF4;
+    border: 1px solid #86EFAC;
+    color: #166534;
+    font-size: 0.72rem;
+    font-weight: 600;
+    border-radius: 40px;
+    padding: 0.2rem 0.7rem;
+    margin-top: 0.6rem;
+    letter-spacing: 0.3px;
+  }
+
+  .cert-pill.winner { background: #FFFBEB; border-color: #FDE68A; color: #92400E; }
 
   .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; position: relative; }
 
@@ -366,7 +469,6 @@
 
   .rule-check::after { content: ''; width: 6px; height: 4px; border-left: 1.5px solid var(--orange); border-bottom: 1.5px solid var(--orange); transform: rotate(-45deg) translateY(-1px); }
 
-  /* ── FORM ── */
   .form-section { background: var(--cream-dark); }
 
   .form-card {
@@ -427,7 +529,6 @@
   .upload-text { font-size: 0.85rem; color: var(--text-muted); }
   .upload-text strong { color: var(--orange); }
 
-  /* Fee note */
   .fee-note {
     background: var(--orange-pale);
     border: 1px solid var(--orange-light);
@@ -464,7 +565,6 @@
   .btn-submit:hover:not(:disabled) { background: #EA6A0A; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(249,115,22,0.45); }
   .btn-submit:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
 
-  /* Progress bar */
   .progress-wrap { display: none; margin-bottom: 1rem; }
   .progress-wrap.visible { display: block; }
 
@@ -472,7 +572,6 @@
   .progress-bar-fill { height: 100%; background: var(--orange); border-radius: 99px; width: 0%; transition: width 0.4s ease; }
   .progress-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.4rem; text-align: center; }
 
-  /* Success state */
   .success-box { display: none; background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 16px; padding: 2rem; text-align: center; }
   .success-box.visible { display: block; }
 
@@ -482,7 +581,6 @@
   .success-box p  { font-size: 0.88rem; color: #15803D; }
   .success-payment-id { font-size: 0.75rem; color: #86EFAC; margin-top: 0.6rem; font-family: monospace; }
 
-  /* Error */
   .form-error { display: none; background: #FEF2F2; border: 1.5px solid #FCA5A5; border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.85rem; color: #DC2626; margin-bottom: 1rem; text-align: center; }
   .form-error.visible { display: block; }
 
@@ -534,6 +632,8 @@
     .artwork-placeholders .artwork-ph:last-child { display: none; }
     .comp-card { padding: 2rem 1.2rem; }
     .form-card { padding: 1.8rem 1.2rem; }
+    .prizes-grid { grid-template-columns: 1fr; }
+    .media-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -552,16 +652,16 @@
   <div class="hero-pattern"></div>
   <div class="hero-sun"></div>
   <div class="hero-content">
-    <div class="hero-eyebrow">✦ Bohag Bihu 2025 ✦</div>
+    <div class="hero-eyebrow">✦ Bohag Bihu 2026 ✦</div>
     <h1><span>Taroka</span></h1>
     <p class="hero-subtitle">Bohag Bihu Drawing Competition</p>
-    <p class="hero-tagline">Celebrate Rongali Bihu through your creativity</p>
+    <p class="hero-tagline">Win cash prizes, get featured in media, and showcase your creativity</p>
     <p class="hero-trust"><span>Open for all artists across Assam</span></p>
     <div class="btn-group">
       <a href="#apply" class="btn-primary">Apply Now →</a>
       <a href="#prizes" class="btn-secondary">View Prizes</a>
     </div>
-    <p class="urgency">⏰ Limited entries &nbsp;·&nbsp; Deadline: April 30, 2025</p>
+    <p class="urgency">⏰ Limited entries &nbsp;·&nbsp; Deadline: May 14, 2026</p>
   </div>
 </section>
 
@@ -573,11 +673,12 @@
     <div class="comp-card">
       <h2>Taroka Drawing Competition</h2>
       <div class="prize-pool">₹25,000+</div>
-      <p class="prize-sub">Submit your artwork inspired by Bohag Bihu and stand a chance to win exciting cash prizes and get featured on our official page.</p>
+      <p class="prize-sub">Submit your artwork inspired by Bohag Bihu and stand a chance to win exciting cash prizes, get featured in newspapers and media, and gain recognition across Assam.</p>
       <div class="trust-badges">
         <div class="badge"><span class="badge-dot"></span>Fair Judging</div>
         <div class="badge"><span class="badge-dot"></span>All Assam Participation</div>
         <div class="badge"><span class="badge-dot"></span>Digital Certificate</div>
+        <div class="badge"><span class="badge-dot"></span>Media Coverage</div>
       </div>
       <div class="btn-group">
         <a href="#apply" class="btn-primary">Apply Now →</a>
@@ -594,27 +695,91 @@
   <div class="container text-center">
     <p class="section-label">Rewards</p>
     <h2 class="section-title">Prize Breakdown</h2>
-    <p class="section-sub">Three winners will take home exciting cash rewards. All participants receive a digital certificate.</p>
+    <p class="section-sub">Nine winners across three tiers take home exciting cash rewards. Every participant receives a digital certificate.</p>
     <div class="prizes-grid">
       <div class="prize-card gold-prize">
         <span class="prize-medal">🥇</span>
         <div class="prize-rank">1st Prize</div>
         <div class="prize-amount">₹10,000</div>
+        <div class="prize-winners">1 Winner</div>
       </div>
       <div class="prize-card silver-prize">
         <span class="prize-medal">🥈</span>
         <div class="prize-rank">2nd Prize</div>
         <div class="prize-amount">₹7,000</div>
+        <div class="prize-winners">3 Winners</div>
+        <div class="prize-each">₹2,333 each</div>
       </div>
       <div class="prize-card bronze-prize">
         <span class="prize-medal">🥉</span>
         <div class="prize-rank">3rd Prize</div>
         <div class="prize-amount">₹5,000</div>
+        <div class="prize-winners">5 Winners</div>
+        <div class="prize-each">₹1,000 each</div>
       </div>
     </div>
-    <p class="prize-note">🎉 <strong>Winners will be announced publicly</strong> on our official Instagram page after judging is complete.</p>
+    <p class="prize-note">🎉 <strong>Winners will be announced publicly</strong> on our official Instagram page after judging is complete. Additional rewards for top-performing participants.</p>
     <br>
     <a href="#apply" class="btn-primary">Apply Now →</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MEDIA & RECOGNITION -->
+<section class="media-section" id="media">
+  <div class="container text-center">
+    <p class="section-label">Exposure</p>
+    <h2 class="section-title">Media Recognition & Exposure</h2>
+    <p class="section-sub">Your creativity deserves to be seen far beyond the competition — we make sure it is.</p>
+    <div class="media-grid">
+      <div class="media-card card-press">
+        <div class="media-icon">📰</div>
+        <h4>Newspaper Coverage</h4>
+        <p>Winners will be featured in newspapers and news media, bringing your art to readers across Assam.</p>
+      </div>
+      <div class="media-card card-digital">
+        <div class="media-icon">🌐</div>
+        <h4>Digital Showcase</h4>
+        <p>Selected artworks will be showcased across digital platforms, reaching audiences well beyond the competition.</p>
+      </div>
+      <div class="media-card card-recognition">
+        <div class="media-icon">🌟</div>
+        <h4>Public Recognition</h4>
+        <p>Top entries will be highlighted and celebrated across Assam and beyond, giving your work the spotlight it deserves.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CERTIFICATES & RECOGNITION -->
+<section class="cert-section">
+  <div class="container text-center">
+    <p class="section-label">Certificates</p>
+    <h2 class="section-title">Certificates & Recognition</h2>
+    <p class="section-sub">Everyone who participates gets recognised. Winners receive special honours on top of that.</p>
+    <div class="cert-grid">
+      <div class="cert-card">
+        <div class="cert-icon-wrap">🎓</div>
+        <h4>Participation Certificate</h4>
+        <p>Every participant who submits a valid entry will receive an official digital participation certificate.</p>
+        <span class="cert-pill">All Participants</span>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon-wrap">🏆</div>
+        <h4>Winner Certificate</h4>
+        <p>All prize winners receive an official winner certificate recognising their achievement in the competition.</p>
+        <span class="cert-pill winner">9 Winners</span>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon-wrap">⭐</div>
+        <h4>Featured Recognition</h4>
+        <p>Top entries will be specially recognised and featured across our platforms and partner channels.</p>
+        <span class="cert-pill winner">Top Entries</span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -630,12 +795,12 @@
       <div class="step-item">
         <div class="step-num">1</div>
         <div class="step-title">Fill the Form</div>
-        <p class="step-desc">Fill in your details and upload your original artwork in JPG or PNG format.</p>
+        <p class="step-desc">Enter your details and upload your original artwork in JPG or PNG format.</p>
       </div>
       <div class="step-item">
         <div class="step-num">2</div>
         <div class="step-title">Pay ₹99</div>
-        <p class="step-desc">Complete the ₹99 entry fee securely via Razorpay — UPI, cards, and net banking accepted.</p>
+        <p class="step-desc">Secure your entry through our safe payment system — UPI, cards, and net banking accepted.</p>
       </div>
       <div class="step-item">
         <div class="step-num">3</div>
@@ -720,7 +885,6 @@
         </div>
         <p class="fee-subtext">Paid securely via Razorpay · UPI, Cards, Net Banking</p>
 
-        <!-- Progress bar (shown after payment succeeds, during upload) -->
         <div class="progress-wrap" id="progressWrap">
           <div class="progress-bar-bg">
             <div class="progress-bar-fill" id="progressFill"></div>
@@ -733,7 +897,6 @@
         </button>
       </div>
 
-      <!-- Success state -->
       <div class="success-box" id="successBox">
         <div class="success-icon">🎉</div>
         <h4>Entry Submitted!</h4>
@@ -786,17 +949,16 @@
   <p class="footer-follow">Follow us for updates</p>
   <a href="#" class="instagram-link"><span class="insta-icon"></span>@taroka.art</a>
   <div class="footer-links">
-    <a href="mailto:hello@taroka.art">hello@taroka.art</a>
+    <a href="mailto:contact@taroka.in">contact@taroka.in</a>
     <a href="#prizes">Prizes</a>
+    <a href="#media">Media</a>
     <a href="#apply">Apply</a>
   </div>
   <p style="font-size:0.8rem; color:rgba(255,255,255,0.4);">For any queries, contact us anytime. We're happy to help.</p>
-  <p class="footer-copy">© 2025 Taroka · Made with ❤ in Assam</p>
+  <p class="footer-copy">© 2026 Taroka · Made with ❤ in Assam</p>
 </footer>
 
-<!-- ── FORM + PAYMENT LOGIC ───────────────────────────────── -->
 <script>
-  // ── File picker display ──────────────────────────────────
   document.getElementById('artwork').addEventListener('change', function () {
     const file = this.files[0];
     if (!file) return;
@@ -805,7 +967,6 @@
       `<strong>${file.name}</strong><br><span style="color:var(--orange)">✓ File selected</span>`;
   });
 
-  // ── Helpers ──────────────────────────────────────────────
   function showError(msg) {
     const el = document.getElementById('formError');
     el.textContent = msg;
@@ -828,11 +989,9 @@
     btn.disabled = disabled;
   }
 
-  // ── Main handler ─────────────────────────────────────────
   async function handleSubmit() {
     hideError();
 
-    // 1. Collect + validate fields
     const name         = document.getElementById('name').value.trim();
     const email        = document.getElementById('email').value.trim();
     const phone        = document.getElementById('phone').value.trim();
@@ -852,7 +1011,6 @@
     if (artworkFile.size > 5 * 1024 * 1024)
                        return showError('File size must be under 5MB.');
 
-    // 2. Create Razorpay order on the server
     setBtn('Creating order…', true);
 
     let orderData;
@@ -869,7 +1027,6 @@
       return showError(err.message);
     }
 
-    // 3. Open Razorpay checkout
     const options = {
       key         : orderData.keyId,
       amount      : orderData.amount,
@@ -880,9 +1037,7 @@
       prefill     : { name, email, contact: phone },
       theme       : { color: '#F97316' },
 
-      // ── Called on successful payment ──
       handler: async function (response) {
-        // 4. Show progress bar and save entry
         document.getElementById('progressWrap').classList.add('visible');
         setProgress(30, 'Payment confirmed! Uploading artwork…');
         setBtn('Saving entry…', true);
@@ -908,7 +1063,6 @@
 
           setProgress(100, 'All done!');
 
-          // 5. Show success
           setTimeout(() => {
             document.getElementById('formFields').style.display = 'none';
             document.getElementById('progressWrap').classList.remove('visible');
@@ -922,11 +1076,10 @@
         } catch (err) {
           document.getElementById('progressWrap').classList.remove('visible');
           setBtn('Pay ₹99 & Submit →', false);
-          showError('Payment was successful but saving your entry failed. Please contact hello@taroka.art with your payment ID: ' + response.razorpay_payment_id);
+          showError('Payment was successful but saving your entry failed. Please contact contact@taroka.in with your payment ID: ' + response.razorpay_payment_id);
         }
       },
 
-      // ── Called if user closes modal without paying ──
       modal: {
         ondismiss: function () {
           setBtn('Pay ₹99 & Submit →', false);
