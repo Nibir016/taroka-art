@@ -243,8 +243,8 @@ app.post('/api/verify-user', async (req, res) => {
       return res.status(404).json({ error: 'No registration found with this email. Please register first.' });
     }
 
-    // Phone mismatch — simple security check
-    if (entry.phone !== normalizePhone(phone)) {
+    // Phone mismatch — normalize both sides so old + new entries both work
+    if (normalizePhone(entry.phone) !== normalizePhone(phone)) {
       return res.status(403).json({ error: 'Phone number does not match our records.' });
     }
 
@@ -303,7 +303,8 @@ app.post('/api/upload-artwork', upload.single('artwork'), async (req, res) => {
     if (!entry) {
       return res.status(404).json({ error: 'No registration found with this email.' });
     }
-    if (entry.phone !== normalizePhone(phone)) {
+    // Normalize both sides so old + new entries both work
+    if (normalizePhone(entry.phone) !== normalizePhone(phone)) {
       return res.status(403).json({ error: 'Phone number does not match our records.' });
     }
     if (entry.paymentStatus !== 'paid') {
