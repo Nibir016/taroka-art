@@ -29,6 +29,22 @@ if (missing.length) {
 }
 console.log('✅  All env vars found');
 
+// ─────────────────────────────────────────────
+// PHONE NORMALIZER
+// Strips +91 / 91 / 0 prefix, spaces, dashes
+// so +91 98765 43210, 9876543210, 09876543210
+// all become "9876543210" for safe comparison.
+// ─────────────────────────────────────────────
+function normalizePhone(raw = '') {
+  // Remove every character that isn't a digit
+  let digits = raw.replace(/\D/g, '');
+  // Drop leading country code 91 (India) if 12 digits
+  if (digits.length === 12 && digits.startsWith('91')) digits = digits.slice(2);
+  // Drop leading 0 if 11 digits
+  if (digits.length === 11 && digits.startsWith('0')) digits = digits.slice(1);
+  return digits; // should now be 10 digits
+}
+
 // Artwork upload deadline — change this in Railway vars if needed
 // Format: any string that JavaScript's Date() can parse
 const DEADLINE = new Date(process.env.SUBMISSION_DEADLINE || '2026-05-14T23:59:59+05:30');
@@ -187,7 +203,7 @@ app.post('/api/register', async (req, res) => {
     const entry = await Entry.create({
       name,
       email,
-      phone,
+      phone : normalizePhone(phone),   // ← stored in normalised form
       age,
       razorpayOrderId  : razorpay_order_id,
       razorpayPaymentId: razorpay_payment_id,
@@ -228,7 +244,7 @@ app.post('/api/verify-user', async (req, res) => {
     }
 
     // Phone mismatch — simple security check
-    if (entry.phone !== phone.trim()) {
+    if (entry.phone !== normalizePhone(phone)) {
       return res.status(403).json({ error: 'Phone number does not match our records.' });
     }
 
@@ -287,7 +303,7 @@ app.post('/api/upload-artwork', upload.single('artwork'), async (req, res) => {
     if (!entry) {
       return res.status(404).json({ error: 'No registration found with this email.' });
     }
-    if (entry.phone !== phone.trim()) {
+    if (entry.phone !== normalizePhone(phone)) {
       return res.status(403).json({ error: 'Phone number does not match our records.' });
     }
     if (entry.paymentStatus !== 'paid') {
