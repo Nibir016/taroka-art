@@ -290,8 +290,14 @@ section { padding: 3.5rem 0; position: relative; }
 /* ── Footer ── */
 footer { background: #0F172A; color: rgba(255,255,255,0.7); text-align: center; padding: 4rem 1.5rem 3rem; font-family: 'Inter', sans-serif; }
 .footer-logo { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; letter-spacing: -1px; }
-.instagram-link { display: inline-block; background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: #fff; padding: 0.4rem 1.2rem; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 0.85rem; margin: 1rem 0; box-shadow: 0 4px 14px rgba(220,39,67,0.3); transition: transform 0.2s; }
-.instagram-link:hover { transform: scale(1.05); }
+.social-links { display: flex; justify-content: center; gap: 1rem; margin: 1.2rem 0; flex-wrap: wrap; }
+.social-link { display: inline-flex; align-items: center; gap: 0.5rem; color: #fff; padding: 0.5rem 1.4rem; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 0.85rem; transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease; }
+.social-link:hover { transform: translateY(-3px) scale(1.04); }
+.social-link svg { flex-shrink: 0; }
+.social-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); box-shadow: 0 4px 14px rgba(220,39,67,0.3); }
+.social-instagram:hover { box-shadow: 0 8px 24px rgba(220,39,67,0.45); }
+.social-facebook { background: linear-gradient(135deg, #1877F2, #0C5DC7); box-shadow: 0 4px 14px rgba(24,119,242,0.3); }
+.social-facebook:hover { box-shadow: 0 8px 24px rgba(24,119,242,0.45); }
 .footer-links { margin-top: 1.5rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
 .footer-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
 .footer-links a:hover { color: #fff; }

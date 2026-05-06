@@ -2,6 +2,16 @@
 // Taroka — Homepage Logic
 // ══════════════════════════════════════════
 
+/**
+ * Return the Cloudinary URL as-is (Strict Transformations is enabled on the
+ * account, so unsigned on-the-fly transforms return 401).
+ * @param {string} url  – Raw Cloudinary secure_url
+ * @returns {string} The original URL
+ */
+function cloudinaryUrl(url) {
+  return url || '';
+}
+
 const TYPE_LABELS = { art: '🎨 Art', photography: '📷 Photography', writing: '✍️ Writing', quiz: '🧠 Quiz', dance: '💃 Dance', music: '🎵 Music', song: '🎤 Song', modeling: '🌟 Modeling', craft: '🧶 Craft', cooking: '🍳 Cooking', general: '🌟 General' };
 const STATUS_LABELS = { ongoing: 'Ongoing', upcoming: 'Upcoming', judging: 'Judging', completed: 'Completed' };
 
@@ -16,7 +26,7 @@ function formatFee(paise) {
 
 function createCompCard(comp) {
   const statusClass = `status-${comp.status}`;
-  const imgSrc = comp.coverImage || `data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200"><rect width="400" height="200" fill="%23FEF3E2"/><text x="200" y="105" text-anchor="middle" fill="%23D97706" font-size="40">' + (TYPE_LABELS[comp.type] || '🌟').split(' ')[0] + '</text></svg>')}`;
+  const imgSrc = cloudinaryUrl(comp.coverImage, 'cover') || `data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200"><rect width="400" height="200" fill="%23FEF3E2"/><text x="200" y="105" text-anchor="middle" fill="%23D97706" font-size="40">' + (TYPE_LABELS[comp.type] || '🌟').split(' ')[0] + '</text></svg>')}`;
 
   return `
     <a href="/competition?slug=${comp.slug}" class="comp-card" id="comp-${comp.slug}">

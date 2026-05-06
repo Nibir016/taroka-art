@@ -46,6 +46,16 @@ function hideErr(id) { document.getElementById(id).classList.remove('visible'); 
 function formatDate(d) { return new Date(d).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' }); }
 function formatFee(p) { return (!p || p === 0) ? 'Free' : '₹' + (p/100); }
 
+/**
+ * Return the Cloudinary URL as-is (Strict Transformations is enabled on the
+ * account, so unsigned on-the-fly transforms return 401).
+ * @param {string} url  – Raw Cloudinary secure_url
+ * @returns {string} The original URL
+ */
+function cloudinaryUrl(url) {
+  return url || '';
+}
+
 const STATUS_COLORS = {
   draft: 'background:#F3F4F6;color:#4B5563;', ongoing: 'background:#DCFCE7;color:#166534;',
   upcoming: 'background:#EFF6FF;color:#1E40AF;', judging: 'background:#FFFBEB;color:#92400E;',
@@ -591,7 +601,7 @@ function openEditModal(id) {
   if (c.coverImage) {
     const area = document.getElementById('featuredUploadArea');
     const preview = document.getElementById('featuredPreview');
-    preview.innerHTML = `<img src="${c.coverImage}" alt="Current featured image">`;
+    preview.innerHTML = `<img src="${cloudinaryUrl(c.coverImage, 'cover')}" alt="Current featured image">`;
     area.classList.add('has-preview');
   }
 
@@ -805,7 +815,7 @@ async function viewEntries(compId, title) {
           <td>${e.phone}</td>
           <td><span class="pill" style="background:#F3F4F6;color:#4B5563;">${e.category || '-'}</span></td>
           <td><span class="pill" style="${paymentColor}">${paymentLabel}</span></td>
-          <td>${e.hasSubmittedArtwork ? `<a href="${e.artworkUrl}" target="_blank" style="color:var(--orange);">View</a>` : '<span style="color:var(--text-muted);">Pending</span>'}</td>
+          <td>${e.hasSubmittedArtwork ? `<a href="${cloudinaryUrl(e.artworkUrl, 'artwork')}" target="_blank" style="color:var(--orange);">View</a>` : '<span style="color:var(--text-muted);">Pending</span>'}</td>
           <td>${formatDate(e.registeredAt)}</td>
         </tr>
       `}).join('');
@@ -820,7 +830,7 @@ async function viewEntries(compId, title) {
         const paymentLabel = e.paymentStatus === 'offline' ? 'Offline' : e.paymentStatus;
         
         const feeText = comp.onlinePayment === false ? (comp.offlineFeeLabel || 'Offline') : formatFee(comp.groupEntryFee);
-        const membersList = (e.groupMembers || []).map(m => `<div><span style="color:var(--text-muted); font-size:0.75rem;">•</span> ${m.name} <span style="color:var(--text-muted); font-size:0.75rem;">(${m.age || '?'}y, ${m.phone})</span></div>`).join('');
+        const membersList = (e.groupMembers || []).map(m => `<div><span style="color:var(--text-muted); font-size:0.75rem;">•</span> ${m.name}${m.isLeader ? ' <span style="color:var(--orange); font-size:0.7rem; font-weight:600;">Leader</span>' : ''}</div>`).join('');
         
         return `
         <tr>
@@ -837,7 +847,7 @@ async function viewEntries(compId, title) {
             </div>
           </td>
           <td><span class="pill" style="${paymentColor}">${paymentLabel}</span></td>
-          <td>${e.hasSubmittedArtwork ? `<a href="${e.artworkUrl}" target="_blank" style="color:var(--orange);">View</a>` : '<span style="color:var(--text-muted);">Pending</span>'}</td>
+          <td>${e.hasSubmittedArtwork ? `<a href="${cloudinaryUrl(e.artworkUrl, 'artwork')}" target="_blank" style="color:var(--orange);">View</a>` : '<span style="color:var(--text-muted);">Pending</span>'}</td>
         </tr>
       `}).join('');
     }

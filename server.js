@@ -227,6 +227,80 @@ const upload = multer({
 // 7. MIDDLEWARE
 // ─────────────────────────────────────────────
 app.use(cors());
+
+// ── Razorpay Webhook (raw body required BEFORE express.json) ──
+app.post('/api/webhooks/razorpay', express.raw({ type: 'application/json' }), async (req, res) => {
+  try {
+    const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
+    if (!secret) {
+      console.error('❌  RAZORPAY_WEBHOOK_SECRET is not configured');
+      return res.status(500).json({ error: 'Webhook secret not configured' });
+    }
+
+    // 1. Verify signature
+    const signature = req.headers['x-razorpay-signature'];
+    if (!signature) {
+      return res.status(400).json({ error: 'Missing x-razorpay-signature header' });
+    }
+
+    const expectedSig = crypto
+      .createHmac('sha256', secret)
+      .update(req.body)          // req.body is a raw Buffer here
+      .digest('hex');
+
+    if (expectedSig !== signature) {
+      console.warn('⚠️  Webhook signature mismatch — rejecting');
+      return res.status(400).json({ error: 'Invalid signature' });
+    }
+
+    // 2. Parse the verified payload
+    const payload = JSON.parse(req.body.toString());
+    const event = payload.event;
+
+    console.log(`🔔  Razorpay webhook received: ${event}`);
+
+    // 3. Only handle payment.captured
+    if (event !== 'payment.captured') {
+      return res.status(200).json({ status: 'ignored', event });
+    }
+
+    const payment = payload.payload.payment.entity;
+    const competitionId = payment.notes && payment.notes.competitionId;
+    const phone = normalizePhone(payment.contact || '');
+
+    if (!competitionId || !phone) {
+      console.warn('⚠️  Webhook payment missing competitionId or phone', { competitionId, phone });
+      return res.status(200).json({ status: 'skipped', reason: 'missing competitionId or phone' });
+    }
+
+    // 4. Idempotent update — only update if not already paid
+    const entry = await Entry.findOneAndUpdate(
+      { competitionId, phone, paymentStatus: { $ne: 'paid' } },
+      {
+        $set: {
+          paymentStatus: 'paid',
+          razorpayPaymentId: payment.id,
+          razorpayOrderId: payment.order_id || '',
+        },
+      },
+      { new: true }
+    );
+
+    if (entry) {
+      console.log(`✅  Webhook: marked entry ${entry._id} as paid (payment ${payment.id})`);
+    } else {
+      // Either already paid (idempotent) or entry not found yet
+      console.log(`ℹ️  Webhook: no pending entry found for competition=${competitionId} phone=${phone} (may already be paid)`);
+    }
+
+    return res.status(200).json({ status: 'ok' });
+  } catch (err) {
+    console.error('❌  Webhook processing error:', err);
+    // Return 200 to prevent Razorpay from retrying on application errors
+    return res.status(200).json({ status: 'error', message: err.message });
+  }
+});
+
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -337,7 +411,7 @@ app.post('/api/admin/competitions/:id/cover', requireAdmin, upload.single('cover
 
     const result = await new Promise((resolve, reject) => {
       const stream = cloudinary.uploader.upload_stream(
-        { folder: 'taroka-covers', resource_type: 'image', transformation: [{ width: 1200, crop: 'limit' }] },
+        { folder: 'taroka-covers', resource_type: 'image' },
         (err, result) => (err ? reject(err) : resolve(result))
       );
       stream.end(req.file.buffer);
@@ -497,7 +571,7 @@ app.post('/api/upload-artwork', upload.single('artwork'), async (req, res) => {
 
     const cloudResult = await new Promise((resolve, reject) => {
       const stream = cloudinary.uploader.upload_stream(
-        { folder: `taroka-${comp.slug}`, resource_type: 'image', transformation: [{ width: 2000, crop: 'limit' }] },
+        { folder: `taroka-${comp.slug}`, resource_type: 'image' },
         (err, result) => (err ? reject(err) : resolve(result))
       );
       stream.end(req.file.buffer);

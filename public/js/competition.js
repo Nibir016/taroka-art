@@ -2,6 +2,16 @@
 // Taroka — Competition Detail Page Logic
 // ══════════════════════════════════════════
 
+/**
+ * Return the Cloudinary URL as-is (Strict Transformations is enabled on the
+ * account, so unsigned on-the-fly transforms return 401).
+ * @param {string} url  – Raw Cloudinary secure_url
+ * @returns {string} The original URL
+ */
+function cloudinaryUrl(url) {
+  return url || '';
+}
+
 let COMP = null;               // current competition data
 let registeredUser = { name: '', email: '', phone: '' };
 
@@ -36,7 +46,7 @@ function formatFee(paise) { return (!paise || paise === 0) ? 'Free' : '₹' + (p
 // ── Renderers ──
 function renderHero() {
   const hero = document.getElementById('compHero');
-  if (COMP.coverImage) hero.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.6)), url('${COMP.coverImage}')`;
+  if (COMP.coverImage) hero.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.6)), url('${cloudinaryUrl(COMP.coverImage, 'cover')}')`;
   else hero.style.background = 'linear-gradient(135deg, #1C1005 0%, #4A3520 100%)';
 
   document.getElementById('heroContent').innerHTML = `
@@ -119,9 +129,16 @@ function renderRules() {
 
 function renderFee() {
   const isOffline = COMP.onlinePayment === false;
+  const isGroup = currentRegType === 'group' && COMP.allowGroupRegistration;
   
+  // Hide the bottom fee-note bar when group is selected (fee badge is at top of group panel)
+  const feeNote = document.querySelector('#regFields .fee-note');
+  const feeSubtext = document.querySelector('#regFields .fee-subtext');
+  if (feeNote) feeNote.style.display = isGroup ? 'none' : '';
+  if (feeSubtext) feeSubtext.style.display = isGroup ? 'none' : '';
+
   let currentFee = COMP.entryFee;
-  if (currentRegType === 'group' && COMP.allowGroupRegistration) {
+  if (isGroup) {
     currentFee = COMP.groupEntryFee;
   }
 
@@ -138,13 +155,17 @@ function renderFee() {
       trustDiv.innerHTML = '<div class="form-trust-item"><span class="trust-shield"></span>Offline payment at venue</div><div class="form-trust-item"><span class="trust-shield"></span>Data safely stored</div>';
     }
     // Hide fee subtext about Razorpay
-    const feeSubtext = document.querySelector('#panelRegister .fee-subtext');
     if (feeSubtext) feeSubtext.textContent = 'Payment will be collected offline at the venue.';
   } else {
     const fee = formatFee(currentFee);
     document.getElementById('feeDisplay').textContent = fee;
-    document.getElementById('regCardDesc').textContent = `Pay ${fee} to secure your spot. You can upload artwork right after or come back before the deadline.`;
-    document.getElementById('regBtn').textContent = `Pay ${fee} & Register →`;
+    if (isGroup) {
+      document.getElementById('regCardDesc').textContent = `Fill in your group details and pay the group fee to register.`;
+      document.getElementById('regBtn').textContent = `Pay ${fee} & Register Group →`;
+    } else {
+      document.getElementById('regCardDesc').textContent = `Pay ${fee} to secure your spot. You can upload artwork right after or come back before the deadline.`;
+      document.getElementById('regBtn').textContent = `Pay ${fee} & Register →`;
+    }
   }
 }
 
@@ -153,11 +174,6 @@ function renderFormMode() {
 
   if (COMP.allowGroupRegistration) {
     document.getElementById('regTypeWrap').style.display = '';
-    // Show group fee on the toggle card
-    const groupFeeText = COMP.onlinePayment === false
-      ? (COMP.offlineFeeLabel || 'Pay at venue')
-      : formatFee(COMP.groupEntryFee);
-    document.getElementById('groupCardSub').textContent = `Group fee: ${groupFeeText}`;
   }
 
   if (COMP.categories && COMP.categories.length > 0) {
@@ -237,9 +253,7 @@ function selectRegType(type) {
   // Populate group panel info
   if (type === 'group') {
     const maxM = COMP.maxGroupMembers || 5;
-    const feeText = COMP.onlinePayment === false
-      ? (COMP.offlineFeeLabel || 'Pay at venue')
-      : formatFee(COMP.groupEntryFee);
+    const feeText = formatFee(COMP.groupEntryFee);
     document.getElementById('groupFeeBadge').textContent = `Fee: ${feeText}`;
     document.getElementById('groupSubtitle').textContent = `Max ${maxM} members · Fill in your group details below.`;
     updateMemberCount();
@@ -250,9 +264,9 @@ function selectRegType(type) {
 
 function addGroupMemberRow() {
   const container = document.getElementById('groupMembersContainer');
-  const maxMembers = (COMP.maxGroupMembers || 5) - 1; // -1 because leader counts
-  if (container.children.length >= maxMembers) {
-    return alert(`Maximum ${maxMembers} additional members allowed (leader + ${maxMembers} = ${COMP.maxGroupMembers}).`);
+  const maxAdditional = (COMP.maxGroupMembers || 5) - 1; // -1 because leader counts
+  if (container.children.length >= maxAdditional) {
+    return alert(`Maximum group size of ${COMP.maxGroupMembers} reached.`);
   }
 
   groupMemberCounter++;
@@ -261,8 +275,6 @@ function addGroupMemberRow() {
   div.id = `gm-row-${groupMemberCounter}`;
   div.innerHTML = `
     <div><label>Name *</label><input type="text" class="gm-name" placeholder="Member name"></div>
-    <div><label>Phone *</label><input type="tel" class="gm-phone" placeholder="Phone number"></div>
-    <div><label>Age *</label><input type="number" class="gm-age" placeholder="Age" min="1" max="120"></div>
     <button type="button" class="gm-remove-btn" onclick="removeGroupMemberRow(${groupMemberCounter})">✕</button>
   `;
   container.appendChild(div);
@@ -277,8 +289,8 @@ function removeGroupMemberRow(idx) {
 
 function updateMemberCount() {
   const count = document.getElementById('groupMembersContainer').children.length;
-  const max = (COMP.maxGroupMembers || 5) - 1;
-  document.getElementById('groupMemberCount').textContent = `${count} / ${max} members`;
+  const max = COMP.maxGroupMembers || 5;
+  document.getElementById('groupMemberCount').textContent = `Total Members: ${count + 1} / ${max}`;
 }
 
 // File pickers
@@ -332,10 +344,8 @@ async function handleRegister() {
     const container = document.getElementById('groupMembersContainer');
     for (let row of container.children) {
       const mName = row.querySelector('.gm-name').value.trim();
-      const mPhone = row.querySelector('.gm-phone').value.trim();
-      const mAge = row.querySelector('.gm-age').value.trim();
-      if (!mName || !mPhone || !mAge) return showErr('regError', 'Please fill in all group member details (name, phone, age).');
-      groupMembers.push({ name: mName, phone: mPhone, age: mAge });
+      if (!mName) return showErr('regError', 'Please fill in all group member names.');
+      groupMembers.push({ name: mName });
     }
 
     if (groupMembers.length < 2) return showErr('regError', 'Please add at least 1 group member besides the leader.');
