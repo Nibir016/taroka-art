@@ -1,1124 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Taroka – Bohag Bihu Drawing Competition</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500;600&family=Noto+Serif+Bengali:wght@500&display=swap" rel="stylesheet">
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --orange: #F97316;
-    --orange-light: #FED7AA;
-    --orange-pale: #FFF7ED;
-    --red: #DC2626;
-    --gold: #D97706;
-    --gold-light: #FDE68A;
-    --cream: #FFFBF3;
-    --cream-dark: #FEF3E2;
-    --text-dark: #1C1005;
-    --text-mid: #4A3520;
-    --text-muted: #78614A;
-    --white: #FFFFFF;
-    --gamosa-red: #C0392B;
-    --border: rgba(249,115,22,0.18);
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--text-dark);
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  .gamosa-ribbon {
-    height: 10px;
-    background: repeating-linear-gradient(
-      90deg,
-      var(--gamosa-red) 0px, var(--gamosa-red) 18px,
-      #fff 18px, #fff 24px,
-      var(--gamosa-red) 24px, var(--gamosa-red) 28px,
-      #fff 28px, #fff 34px
-    );
-  }
-
-  nav {
-    background: var(--white);
-    border-bottom: 1.5px solid var(--border);
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 64px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
-  .nav-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--orange);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .nav-logo .logo-dot { width: 8px; height: 8px; background: var(--red); border-radius: 50%; display: inline-block; }
-
-  .nav-cta {
-    background: var(--orange);
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1.4rem;
-    border-radius: 40px;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 600;
-    font-size: 0.875rem;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.15s;
-    text-decoration: none;
-  }
-
-  .nav-cta:hover { background: #EA6A0A; transform: translateY(-1px); }
-
-  .hero {
-    position: relative;
-    min-height: 600px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('images/rang-ghar.jpeg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-
-  .hero-pattern {
-    position: absolute; inset: 0; opacity: 0.07;
-    background-image: radial-gradient(circle, #fff 1px, transparent 1px), radial-gradient(circle, #fff 1px, transparent 1px);
-    background-size: 40px 40px, 20px 20px;
-    background-position: 0 0, 10px 10px;
-  }
-
-  .hero-sun {
-    position: absolute; right: -80px; top: -80px;
-    width: 400px; height: 400px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,200,50,0.25) 0%, rgba(255,120,0,0.1) 50%, transparent 70%);
-  }
-
-  .hero-content {
-    position: relative; text-align: center;
-    padding: 4rem 1.5rem; max-width: 680px;
-    animation: fadeUp 0.9s ease both;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(28px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .hero-eyebrow {
-    display: inline-block;
-    background: rgba(255,255,255,0.12); color: #FFD580;
-    border: 1px solid rgba(255,213,128,0.3); border-radius: 40px;
-    padding: 0.3rem 1.1rem; font-size: 0.78rem; font-weight: 500;
-    letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 1.2rem;
-  }
-
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 700; color: #fff;
-    line-height: 1.05; margin-bottom: 0.6rem; letter-spacing: -1px;
-  }
-  .hero h1 span { color: #FFD580; font-style: italic; }
-
-  .hero-subtitle { font-size: 1.15rem; color: rgba(255,255,255,0.82); font-weight: 400; margin-bottom: 0.5rem; }
-  .hero-tagline  { font-size: 0.95rem; color: rgba(255,213,128,0.9); margin-bottom: 1.8rem; }
-
-  .hero-trust { font-size: 0.82rem; color: rgba(255,255,255,0.6); margin-bottom: 2rem; }
-  .hero-trust span { display: inline-flex; align-items: center; gap: 5px; }
-  .hero-trust span::before { content: ''; width: 6px; height: 6px; background: #4ADE80; border-radius: 50%; display: inline-block; }
-
-  .btn-group { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.4rem; }
-
-  .btn-primary {
-    background: var(--orange); color: #fff; border: none;
-    padding: 0.85rem 2rem; border-radius: 50px;
-    font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 1rem;
-    cursor: pointer; transition: all 0.2s; text-decoration: none;
-    display: inline-block; box-shadow: 0 4px 20px rgba(249,115,22,0.45);
-  }
-  .btn-primary:hover { background: #EA6A0A; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(249,115,22,0.55); }
-
-  .btn-secondary {
-    background: rgba(255,255,255,0.12); color: #fff;
-    border: 1.5px solid rgba(255,255,255,0.35); padding: 0.85rem 1.8rem;
-    border-radius: 50px; font-family: 'DM Sans', sans-serif; font-weight: 500;
-    font-size: 1rem; cursor: pointer; transition: all 0.2s; text-decoration: none;
-    display: inline-block; backdrop-filter: blur(8px);
-  }
-  .btn-secondary:hover { background: rgba(255,255,255,0.2); }
-
-  .urgency { font-size: 0.82rem; color: #FFD580; font-weight: 500; }
-
-  section { padding: 4.5rem 1.5rem; }
-  .container { max-width: 840px; margin: 0 auto; }
-
-  .section-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--orange); margin-bottom: 0.6rem; }
-
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 700;
-    color: var(--text-dark); line-height: 1.25; margin-bottom: 0.5rem;
-  }
-
-  .section-sub { color: var(--text-muted); font-size: 1rem; max-width: 520px; margin: 0 auto 2.5rem; line-height: 1.7; }
-
-  .comp-card {
-    background: var(--white); border: 1.5px solid var(--border); border-radius: 24px; padding: 2.5rem;
-    text-align: center; box-shadow: 0 8px 40px rgba(249,115,22,0.08), 0 2px 8px rgba(0,0,0,0.04);
-    position: relative; overflow: hidden;
-  }
-  .comp-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--red), var(--orange), var(--gold)); }
-  .comp-card h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--text-mid); margin-bottom: 1rem; }
-
-  .prize-pool { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem,6vw,3.4rem); font-weight: 700; color: var(--orange); line-height: 1; margin-bottom: 0.4rem; letter-spacing: -1px; }
-  .prize-sub  { color: var(--text-muted); font-size: 0.95rem; max-width: 420px; margin: 0 auto 2rem; line-height: 1.65; }
-
-  .trust-badges { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
-  .badge { display: flex; align-items: center; gap: 6px; background: var(--orange-pale); border: 1px solid var(--orange-light); border-radius: 40px; padding: 0.35rem 0.9rem; font-size: 0.78rem; font-weight: 500; color: #92400E; }
-  .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
-
-  .prizes-section { background: var(--cream-dark); }
-  .prizes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 1.5rem; }
-  .prize-card { background: var(--white); border-radius: 20px; padding: 2rem 1.5rem; text-align: center; border: 1.5px solid transparent; transition: transform 0.2s, box-shadow 0.2s; }
-  .prize-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.06); }
-  .prize-card.gold-prize   { border-color: #FDE68A; background: linear-gradient(160deg,#FFFBEB,#fff); }
-  .prize-card.silver-prize { border-color: #E5E7EB; background: linear-gradient(160deg,#F9FAFB,#fff); }
-  .prize-card.bronze-prize { border-color: #FED7AA; background: linear-gradient(160deg,#FFF7ED,#fff); }
-  .prize-medal   { font-size: 2.2rem; margin-bottom: 0.6rem; display: block; }
-  .prize-rank    { font-size: 0.78rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem; }
-  .prize-amount  { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--text-dark); line-height: 1.1; }
-  .prize-winners { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.4rem; font-weight: 500; }
-  .prize-card.gold-prize .prize-amount { color: var(--gold); }
-  .prize-note { font-size: 0.82rem; color: var(--text-muted); text-align: center; margin-top: 0.5rem; }
-  .prize-note strong { color: var(--text-mid); }
-
-  .media-section { background: var(--white); }
-  .media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; margin-bottom: 1.5rem; }
-  .media-card { background: var(--cream); border: 1.5px solid var(--border); border-radius: 18px; padding: 1.8rem 1.5rem; position: relative; overflow: hidden; transition: transform 0.2s; }
-  .media-card:hover { transform: translateY(-3px); }
-  .media-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-  .media-card.card-press::before       { background: #3B82F6; }
-  .media-card.card-digital::before     { background: var(--orange); }
-  .media-card.card-recognition::before { background: var(--gold); }
-  .media-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 1rem; }
-  .media-card.card-press .media-icon      { background: #EFF6FF; }
-  .media-card.card-digital .media-icon    { background: var(--orange-pale); }
-  .media-card.card-recognition .media-icon { background: #FFFBEB; }
-  .media-card h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--text-dark); margin-bottom: 0.5rem; }
-  .media-card p  { font-size: 0.875rem; color: var(--text-muted); line-height: 1.65; }
-
-  .cert-section { background: var(--cream-dark); }
-  .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
-  .cert-card { background: var(--white); border: 1.5px solid var(--border); border-radius: 18px; padding: 1.8rem 1.5rem; text-align: center; transition: transform 0.2s; }
-  .cert-card:hover { transform: translateY(-3px); }
-  .cert-icon-wrap { width: 52px; height: 52px; border-radius: 14px; background: var(--orange-pale); border: 1.5px solid var(--orange-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.4rem; }
-  .cert-card h4 { font-size: 0.95rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.4rem; }
-  .cert-card p  { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
-  .cert-pill { display: inline-block; background: #F0FDF4; border: 1px solid #86EFAC; color: #166534; font-size: 0.72rem; font-weight: 600; border-radius: 40px; padding: 0.2rem 0.7rem; margin-top: 0.6rem; }
-  .cert-pill.winner { background: #FFFBEB; border-color: #FDE68A; color: #92400E; }
-
-  .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem; position: relative; }
-  .step-item { text-align: center; padding: 0 0.5rem; animation: fadeUp 0.7s ease both; }
-  .step-item:nth-child(2) { animation-delay: 0.1s; }
-  .step-item:nth-child(3) { animation-delay: 0.2s; }
-  .step-item:nth-child(4) { animation-delay: 0.3s; }
-  .step-num {
-    width: 52px; height: 52px; border-radius: 50%; background: var(--orange); color: #fff;
-    font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700;
-    display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;
-    box-shadow: 0 4px 16px rgba(249,115,22,0.3); position: relative;
-  }
-  .step-num::after { content: ''; position: absolute; top: 50%; left: 100%; width: calc(100% + 1.5rem); height: 1.5px; background: var(--orange-light); }
-  .steps-grid .step-item:last-child .step-num::after { display: none; }
-  .step-title { font-weight: 600; font-size: 1rem; color: var(--text-dark); margin-bottom: 0.4rem; }
-  .step-desc  { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
-
-  .rules-section { background: var(--white); }
-  .rules-card { background: var(--cream); border: 1.5px solid var(--border); border-radius: 20px; padding: 2rem 2.2rem; }
-  .rules-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.8rem; }
-  .rules-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: var(--text-mid); line-height: 1.55; }
-  .rule-check { width: 18px; height: 18px; border-radius: 50%; background: var(--orange-light); flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; }
-  .rule-check::after { content: ''; width: 6px; height: 4px; border-left: 1.5px solid var(--orange); border-bottom: 1.5px solid var(--orange); transform: rotate(-45deg) translateY(-1px); }
-
-  /* ── FORM CARDS ── */
-  .form-section { background: var(--cream-dark); }
-
-  .form-card {
-    background: var(--white); border: 1.5px solid var(--border); border-radius: 24px;
-    padding: 2.5rem; box-shadow: 0 8px 40px rgba(249,115,22,0.07);
-    max-width: 540px; margin: 0 auto;
-  }
-  .form-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 0.25rem; color: var(--text-dark); }
-  .form-card > .card-desc { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.8rem; }
-
-  .form-group { margin-bottom: 1.1rem; }
-  .form-group label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-mid); margin-bottom: 0.35rem; }
-  .form-group input {
-    width: 100%; padding: 0.7rem 1rem; border: 1.5px solid rgba(249,115,22,0.2);
-    border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 0.93rem;
-    color: var(--text-dark); background: var(--cream); outline: none; transition: border-color 0.2s;
-    -webkit-appearance: none;
-  }
-  .form-group input:focus { border-color: var(--orange); background: #fff; }
-
-  .upload-area {
-    border: 2px dashed rgba(249,115,22,0.35); border-radius: 12px; padding: 1.5rem;
-    text-align: center; cursor: pointer; background: var(--orange-pale);
-    transition: border-color 0.2s, background 0.2s; position: relative;
-  }
-  .upload-area:hover    { border-color: var(--orange); background: #FFF3E8; }
-  .upload-area.has-file { border-color: var(--orange); background: #FFF3E8; }
-  .upload-area input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-  .upload-icon { width: 36px; height: 36px; margin: 0 auto 0.5rem; background: var(--orange-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-  .upload-icon::before { content: ''; width: 12px; height: 12px; border: 2px solid var(--orange); border-radius: 2px; border-bottom: none; position: relative; top: 2px; }
-  .upload-text { font-size: 0.85rem; color: var(--text-muted); }
-  .upload-text strong { color: var(--orange); }
-
-  .fee-note { background: var(--orange-pale); border: 1px solid var(--orange-light); border-radius: 10px; padding: 0.8rem 1.1rem; display: flex; align-items: center; justify-content: space-between; margin: 1.4rem 0 0.4rem; }
-  .fee-note .fee-label  { font-size: 0.85rem; color: var(--text-muted); }
-  .fee-note .fee-amount { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--orange); }
-  .fee-subtext { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1.2rem; text-align: right; }
-
-  .btn-submit {
-    display: block; width: 100%; background: var(--orange); color: #fff; border: none;
-    padding: 0.95rem; border-radius: 50px; font-family: 'DM Sans', sans-serif;
-    font-weight: 600; font-size: 1.05rem; cursor: pointer; transition: all 0.2s;
-    box-shadow: 0 4px 20px rgba(249,115,22,0.35); margin-bottom: 1rem;
-  }
-  .btn-submit:hover:not(:disabled) { background: #EA6A0A; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(249,115,22,0.45); }
-  .btn-submit:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
-
-  /* secondary outline button */
-  .btn-outline {
-    display: block; width: 100%; background: transparent; color: var(--orange);
-    border: 1.5px solid var(--orange); padding: 0.85rem; border-radius: 50px;
-    font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem;
-    cursor: pointer; transition: all 0.2s; margin-bottom: 0.8rem;
-  }
-  .btn-outline:hover { background: var(--orange-pale); }
-
-  .progress-wrap { display: none; margin-bottom: 1rem; }
-  .progress-wrap.visible { display: block; }
-  .progress-bar-bg { height: 6px; background: var(--orange-light); border-radius: 99px; overflow: hidden; }
-  .progress-bar-fill { height: 100%; background: var(--orange); border-radius: 99px; width: 0%; transition: width 0.4s ease; }
-  .progress-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.4rem; text-align: center; }
-
-  /* Success box */
-  .success-box { display: none; background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 16px; padding: 2rem; text-align: center; margin-bottom: 1rem; }
-  .success-box.visible { display: block; }
-  .success-icon { width: 56px; height: 56px; background: #DCFCE7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.6rem; }
-  .success-box h4 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #166534; margin-bottom: 0.4rem; }
-  .success-box p  { font-size: 0.88rem; color: #15803D; }
-  .success-payment-id { font-size: 0.75rem; color: #86EFAC; margin-top: 0.6rem; font-family: monospace; }
-
-  /* Error box */
-  .form-error { display: none; background: #FEF2F2; border: 1.5px solid #FCA5A5; border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.85rem; color: #DC2626; margin-bottom: 1rem; text-align: center; }
-  .form-error.visible { display: block; }
-
-  /* Info box */
-  .info-box { background: #EFF6FF; border: 1.5px solid #BFDBFE; border-radius: 12px; padding: 1rem 1.2rem; font-size: 0.85rem; color: #1E40AF; margin: 1rem 0; line-height: 1.6; }
-
-  .form-trust { display: flex; align-items: center; justify-content: center; gap: 1.2rem; flex-wrap: wrap; margin-top: 0.5rem; }
-  .form-trust-item { font-size: 0.76rem; color: var(--text-muted); display: flex; align-items: center; gap: 5px; }
-  .trust-shield { width: 14px; height: 14px; background: #DCFCE7; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .trust-shield::after { content: ''; width: 6px; height: 4px; border-left: 1.5px solid #16A34A; border-bottom: 1.5px solid #16A34A; transform: rotate(-45deg) translateY(-1px); }
-
-  /* Tab switcher for the two form modes */
-  .form-tabs { display: flex; gap: 0; margin-bottom: 1.8rem; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; }
-  .form-tab {
-    flex: 1; padding: 0.7rem; font-family: 'DM Sans', sans-serif; font-weight: 600;
-    font-size: 0.85rem; cursor: pointer; border: none; background: var(--cream);
-    color: var(--text-muted); transition: all 0.2s; text-align: center;
-  }
-  .form-tab.active { background: var(--orange); color: #fff; }
-
-  /* section divider */
-  .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--orange-light), transparent); margin: 0; }
-  .text-center { text-align: center; }
-
-  .proof-section { background: var(--white); }
-  .proof-banner { background: linear-gradient(135deg, var(--orange) 0%, #C0370A 100%); border-radius: 20px; padding: 2.5rem; text-align: center; color: #fff; margin-bottom: 2rem; position: relative; overflow: hidden; }
-  .proof-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.12) 0%, transparent 60%); }
-  .proof-banner h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.4rem; position: relative; }
-  .proof-banner p  { opacity: 0.85; font-size: 0.95rem; position: relative; }
-  .artwork-placeholders { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-  .artwork-ph { aspect-ratio: 4/5; border-radius: 14px; overflow: hidden; border: 1.5px solid var(--orange-light); }
-
-  footer { background: var(--text-dark); color: rgba(255,255,255,0.7); text-align: center; padding: 2.5rem 1.5rem; }
-  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--orange); margin-bottom: 0.8rem; }
-  .footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
-  .footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
-  .footer-links a:hover { color: var(--orange); }
-  .footer-follow { font-size: 0.82rem; color: rgba(255,255,255,0.45); margin-bottom: 0.5rem; }
-  .instagram-link { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); padding: 0.4rem 1rem; border-radius: 40px; color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.82rem; margin-bottom: 1rem; transition: background 0.2s; }
-  .instagram-link:hover { background: rgba(255,255,255,0.12); }
-  .insta-icon { width: 16px; height: 16px; border: 1.5px solid currentColor; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; }
-  .insta-icon::before { content: ''; width: 6px; height: 6px; border: 1px solid currentColor; border-radius: 50%; }
-  .insta-icon::after  { content: ''; width: 2px; height: 2px; background: currentColor; border-radius: 50%; position: absolute; top: 2px; right: 2px; }
-  .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.3); margin-top: 1.2rem; }
-
-  @media (max-width: 600px) {
-    .steps-grid .step-num::after { display: none; }
-    .artwork-placeholders { grid-template-columns: 1fr 1fr; }
-    .artwork-placeholders .artwork-ph:last-child { display: none; }
-    .prizes-grid { grid-template-columns: 1fr; }
-    .media-grid  { grid-template-columns: 1fr; }
-    .comp-card, .form-card { padding: 1.8rem 1.2rem; }
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taroka — The Real Star</title>
+  <meta name="title" content="Taroka — The Real Star">
+  <meta name="description"
+    content="Welcome to Taroka, Assam's ultimate talent hunt platform. Join our mega dance and modeling competitions, workshops, and reality shows to showcase your hidden talent.">
+  <meta name="keywords"
+    content="Taroka, Taroka the real star, talent hunt Assam, dance competition Lakwa, modeling competition Assam, Sattriya dance competition, Assamese grassroots talent, upcoming reality shows Assam, taroka.in">
+  <meta name="author" content="Taroka - the real star">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2d1b69">
+  <meta name="robots" content="index, follow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
 
-<div class="gamosa-ribbon"></div>
+  <div class="gamosa-ribbon"></div>
 
-<nav>
-  <div class="nav-logo"><span class="logo-dot"></span>Taroka</div>
-  <a href="#apply" class="nav-cta">Register Now →</a>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-pattern"></div>
-  <div class="hero-sun"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">✦ Bohag Bihu 2026 ✦</div>
-    <h1><span>Taroka</span></h1>
-    <p class="hero-subtitle">Bohag Bihu Drawing Competition</p>
-    <p class="hero-tagline">Win cash prizes, get featured in media, and showcase your creativity</p>
-    <p class="hero-trust"><span>Open for all artists across Assam</span></p>
-    <div class="btn-group">
-      <a href="#apply" class="btn-primary">Register Now →</a>
-      <a href="#prizes" class="btn-secondary">View Prizes</a>
+  <nav>
+    <a href="/" class="nav-logo"><img src="/images/taroka-logo.png" alt="Taroka"></a>
+    <div class="nav-links">
+      <a href="#competitions">Competitions</a>
     </div>
-    <p class="urgency">⏰ Limited entries &nbsp;·&nbsp; Deadline: May 14, 2026</p>
-  </div>
-</section>
+  </nav>
 
-<div class="divider"></div>
-
-<!-- COMPETITION CARD -->
-<section style="background:var(--white); padding:4rem 1.5rem;">
-  <div class="container">
-    <div class="comp-card">
-      <h2>Taroka Drawing Competition</h2>
-      <div class="prize-pool">₹25,000+</div>
-      <p class="prize-sub">Submit your artwork inspired by Bohag Bihu and stand a chance to win exciting cash prizes, get featured in newspapers and media, and gain recognition across Assam.</p>
-      <div class="trust-badges">
-        <div class="badge"><span class="badge-dot"></span>Fair Judging</div>
-        <div class="badge"><span class="badge-dot"></span>All Assam Participation</div>
-        <div class="badge"><span class="badge-dot"></span>Digital Certificate</div>
-        <div class="badge"><span class="badge-dot"></span>Media Coverage</div>
-      </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-pattern"></div>
+    <div class="hero-sun"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">✦ Creative Competitions Platform ✦</div>
+      <h1>আপোনাৰ প্ৰতিভাক দিয়ক এক নতুন পৰিচয়! ✨</h1>
+      <p class="hero-subtitle">গাঁৱৰ চুকত লুকাই থকা প্ৰকৃত প্ৰতিভাক বিশ্বৰ দৰবাৰলৈ আগবঢ়াই নিয়াৰ এক নিৰ্ভৰযোগ্য মঞ্চ -
+        TAROKA.</p>
       <div class="btn-group">
-        <a href="#apply" class="btn-primary">Register Now →</a>
-        <a href="#prizes" class="btn-secondary" style="border-color:var(--border);color:var(--orange);">View Prizes</a>
+        <a href="#competitions" class="btn-primary">Browse Competitions →</a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<div class="divider"></div>
+  <div class="pattern-divider pattern-1" id="competitions"></div>
 
-<!-- PRIZES -->
-<section class="prizes-section" id="prizes">
-  <div class="container text-center">
-    <p class="section-label">Rewards</p>
-    <h2 class="section-title">Prize Breakdown</h2>
-    <p class="section-sub">Nine winners across three tiers take home exciting cash rewards. Every participant receives a digital certificate.</p>
-    <div class="prizes-grid">
-      <div class="prize-card gold-prize">
-        <span class="prize-medal">🥇</span>
-        <div class="prize-rank">1st Prize</div>
-        <div class="prize-amount">₹10,000</div>
-        <div class="prize-winners">1 Winner</div>
+  <!-- UPCOMING -->
+  <section id="upcomingSection" class="reveal section-upcoming" style="display:none;">
+    <div class="container">
+      <div class="text-center">
+        <p class="section-label">Coming Soon</p>
+        <h2 class="section-title">Upcoming Competitions</h2>
+        <p class="section-sub">Stay tuned for these exciting upcoming events.</p>
       </div>
-      <div class="prize-card silver-prize">
-        <span class="prize-medal">🥈</span>
-        <div class="prize-rank">2nd Prize</div>
-        <div class="prize-amount">₹7,000</div>
-        <div class="prize-winners">3 Winners</div>
+      <div id="upcomingGrid" class="competitions-grid"></div>
+    </div>
+  </section>
+
+  <!-- ONGOING COMPETITIONS -->
+  <section class="reveal section-ongoing">
+    <div class="container">
+      <div class="text-center">
+        <p class="section-label">Participate Now</p>
+        <h2 class="section-title">Ongoing Competitions</h2>
+        <p class="section-sub">Join an active competition and showcase your talent.</p>
       </div>
-      <div class="prize-card bronze-prize">
-        <span class="prize-medal">🥉</span>
-        <div class="prize-rank">3rd Prize</div>
-        <div class="prize-amount">₹5,000</div>
-        <div class="prize-winners">5 Winners</div>
+      <div id="ongoingGrid" class="competitions-grid">
+        <div class="skeleton" style="height:340px;border-radius:24px;"></div>
+      </div>
+      <div id="ongoingEmpty" class="empty-state" style="display:none;">
+        <div class="empty-state-icon">🎨</div>
+        <h3>No ongoing competitions right now</h3>
+        <p>Check back soon — new competitions are added regularly!</p>
       </div>
     </div>
-    <p class="prize-note">🎉 <strong>Winners announced publicly</strong> on our official Instagram page after judging is complete.</p>
-    <br>
-    <a href="#apply" class="btn-primary">Register Now →</a>
-  </div>
-</section>
+  </section>
 
-<div class="divider"></div>
+  <!-- COMPLETED -->
+  <section id="completedSection" class="reveal section-completed" style="display:none;">
+    <div class="container">
+      <div class="text-center">
+        <p class="section-label">Past Events</p>
+        <h2 class="section-title">Completed Competitions</h2>
+        <p class="section-sub">Browse results from past competitions.</p>
+      </div>
+      <div id="completedGrid" class="competitions-grid"></div>
+    </div>
+  </section>
 
-<!-- MEDIA & RECOGNITION -->
-<section class="media-section" id="media">
-  <div class="container text-center">
-    <p class="section-label">Exposure</p>
-    <h2 class="section-title">Media Recognition & Exposure</h2>
-    <p class="section-sub">Your creativity deserves to be seen far beyond the competition.</p>
-    <div class="media-grid">
-      <div class="media-card card-press">
-        <div class="media-icon">📰</div>
-        <h4>Newspaper Coverage</h4>
-        <p>Winners will be featured in newspapers and news media, bringing your art to readers across Assam.</p>
-      </div>
-      <div class="media-card card-digital">
-        <div class="media-icon">🌐</div>
-        <h4>Digital Showcase</h4>
-        <p>Selected artworks will be showcased across digital platforms, reaching audiences well beyond the competition.</p>
-      </div>
-      <div class="media-card card-recognition">
-        <div class="media-icon">🌟</div>
-        <h4>Public Recognition</h4>
-        <p>Top entries will be highlighted and celebrated across Assam and beyond.</p>
+  <div class="pattern-divider pattern-2"></div>
+
+  <!-- ABOUT US -->
+  <section class="reveal section-about">
+    <div class="container">
+      <div class="text-center" style="max-width: 800px; margin: 0 auto;">
+        <p class="section-label">আমাৰ বিষয়ে</p>
+        <h2 class="section-title">About Us</h2>
+        <p class="section-sub"
+          style="font-size:1.1rem; color:rgba(255,255,255,0.9); line-height:1.8; text-align: left; max-width: 100%;">
+          <strong>"Taroka - the real star"</strong> কেৱল এটি প্ৰতিযোগিতা নহয়, ই হৈছে এক সপোন উৰুৱাব পৰা মঞ্চ। আমাৰ মূল
+          লক্ষ্য হৈছে গাঁৱে-ভূঞে, চুকে-কোণে লুকাই থকা সেই অসাধাৰণ প্ৰতিভাবোৰক বিচাৰি উলিওৱা, যিসকলৰ আগবাঢ়ি যাবলৈ প্ৰবল
+          ইচ্ছা আছে কিন্তু সঠিক সুবিধা আৰু পথ প্ৰদৰ্শকৰ অভাৱ। 'তাৰকা'ই সেইসকল প্ৰতিভাক কেৱল এখন মঞ্চই নিদিয়ে, লগতে
+          তেওঁলোকক <strong>Media Visibility</strong>, সঠিক <strong>Exposure</strong> আৰু নিজৰ দক্ষতা প্ৰদৰ্শনৰ এক বিশাল
+          সুযোগ প্ৰদান কৰিব।
+        </p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<div class="divider"></div>
+  <div class="pattern-divider pattern-3"></div>
 
-<!-- CERTIFICATES -->
-<section class="cert-section">
-  <div class="container text-center">
-    <p class="section-label">Certificates</p>
-    <h2 class="section-title">Certificates & Recognition</h2>
-    <p class="section-sub">Everyone who participates gets recognised.</p>
-    <div class="cert-grid">
-      <div class="cert-card">
-        <div class="cert-icon-wrap">🎓</div>
-        <h4>Participation Certificate</h4>
-        <p>Every valid entry receives an official digital participation certificate.</p>
-        <span class="cert-pill">All Participants</span>
+  <!-- VISION & FUTURE PLANS -->
+  <section class="reveal section-vision">
+    <div class="container">
+      <div class="text-center">
+        <p class="section-label">আমাৰ ভৱিষ্যতৰ পৰিকল্পনা</p>
+        <h2 class="section-title">Our Vision & Future Plans</h2>
+        <p class="section-sub">আমাৰ যাত্ৰা কেৱল এখন প্ৰতিযোগিতাতে সীমাবদ্ধ নহয়। আগন্তুক দিনবোৰত 'তাৰকা'ৰ জৰিয়তে আমি
+          হাতত লৈছোঁ কেইবাখনো মেগা প্ৰজেক্ট:</p>
       </div>
-      <div class="cert-card">
-        <div class="cert-icon-wrap">🏆</div>
-        <h4>Winner Certificate</h4>
-        <p>All prize winners receive an official winner certificate.</p>
-        <span class="cert-pill winner">9 Winners</span>
-      </div>
-      <div class="cert-card">
-        <div class="cert-icon-wrap">⭐</div>
-        <h4>Featured Recognition</h4>
-        <p>Top entries will be specially recognised across our platforms.</p>
-        <span class="cert-pill winner">Top Entries</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- HOW TO PARTICIPATE — updated to 4 steps -->
-<section style="background:var(--white);">
-  <div class="container text-center">
-    <p class="section-label">Process</p>
-    <h2 class="section-title">How to Participate</h2>
-    <p class="section-sub">Four simple steps. Register today, upload your artwork anytime before the deadline.</p>
-    <div class="steps-grid">
-      <div class="step-item">
-        <div class="step-num">1</div>
-        <div class="step-title">Fill the Form</div>
-        <p class="step-desc">Enter your name, email, phone and age.</p>
-      </div>
-      <div class="step-item">
-        <div class="step-num">2</div>
-        <div class="step-title">Pay ₹99</div>
-        <p class="step-desc">Secure your spot via Razorpay — UPI, cards, net banking accepted.</p>
-      </div>
-      <div class="step-item">
-        <div class="step-num">3</div>
-        <div class="step-title">Upload Artwork</div>
-        <p class="step-desc">Upload your drawing right away — or come back before May 14 to submit it.</p>
-      </div>
-      <div class="step-item">
-        <div class="step-num">4</div>
-        <div class="step-title">Await Results</div>
-        <p class="step-desc">Judges evaluate all entries. Winners announced on our official page.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- RULES -->
-<section class="rules-section">
-  <div class="container text-center">
-    <p class="section-label">Guidelines</p>
-    <h2 class="section-title">Rules & Guidelines</h2>
-    <p class="section-sub">Please read these carefully before submitting your entry.</p>
-    <div class="rules-card">
-      <ul class="rules-list">
-        <li><span class="rule-check"></span>Only original artwork accepted – no AI-generated or copied art.</li>
-        <li><span class="rule-check"></span>Theme must relate to Bohag Bihu or Assamese culture.</li>
-        <li><span class="rule-check"></span>One entry per participant only.</li>
-        <li><span class="rule-check"></span>Accepted formats: JPG and PNG files only.</li>
-        <li><span class="rule-check"></span>Maximum file size: 5MB per artwork.</li>
-        <li><span class="rule-check"></span>Decision of the judges is final and binding.</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ═══════════════════════════════════════════════
-     MAIN FORM SECTION — two tabs:
-     Tab 1: Register & Pay (new users)
-     Tab 2: Upload Artwork (returning users)
-═══════════════════════════════════════════════ -->
-<section class="form-section" id="apply">
-  <div class="container text-center">
-    <p class="section-label">Registration</p>
-    <h2 class="section-title">Join the Competition</h2>
-    <p class="section-sub" style="margin-bottom:2rem;">
-      New here? Register and pay below. Already registered? Switch to the Upload tab to submit your artwork.
-    </p>
-
-    <div class="form-card">
-
-      <!-- Tab switcher -->
-      <div class="form-tabs">
-        <button class="form-tab active" id="tabRegister" onclick="switchTab('register')">
-          1 · Register &amp; Pay
-        </button>
-        <button class="form-tab" id="tabUpload" onclick="switchTab('upload')">
-          2 · Upload Artwork
-        </button>
-      </div>
-
-      <!-- ── TAB 1: REGISTER & PAY ── -->
-      <div id="panelRegister">
-        <h3>Entry Form</h3>
-        <p class="card-desc">Pay ₹99 to secure your spot. You can upload artwork right after or come back before the deadline.</p>
-
-        <div class="form-error" id="regError"></div>
-
-        <div id="regFields">
-          <div class="form-group">
-            <label>Full Name *</label>
-            <input type="text" id="regName" placeholder="Your full name">
-          </div>
-          <div class="form-group">
-            <label>Email Address *</label>
-            <input type="email" id="regEmail" placeholder="you@example.com">
-          </div>
-          <div class="form-group">
-            <label>Phone Number *</label>
-            <input type="tel" id="regPhone" placeholder="+91 XXXXX XXXXX">
-          </div>
-          <div class="form-group">
-            <label>Age *</label>
-            <input type="number" id="regAge" placeholder="Your age" min="1" max="120">
-          </div>
-
-          <div class="fee-note">
-            <span class="fee-label">Entry Fee</span>
-            <span class="fee-amount">₹99</span>
-          </div>
-          <p class="fee-subtext">Paid securely via Razorpay · UPI, Cards, Net Banking</p>
-
-          <div class="progress-wrap" id="regProgress">
-            <div class="progress-bar-bg"><div class="progress-bar-fill" id="regProgressFill"></div></div>
-            <p class="progress-label" id="regProgressLabel">Processing…</p>
-          </div>
-
-          <button class="btn-submit" id="regBtn" onclick="handleRegister()">
-            Pay ₹99 &amp; Register →
-          </button>
+      <div
+        style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:1.5rem; margin-top:2rem;">
+        <div class="glass-card">
+          <div style="font-size:2.5rem; margin-bottom:1rem;">🌟</div>
+          <h4
+            style="font-family:'Playfair Display',serif; font-size:1.15rem; margin-bottom:0.6rem; color:var(--text-dark);">
+            Talent Hunt Competitions</h4>
+          <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.6;">নৃত্য, গীত, অভিনয় আৰু চিত্ৰকলাৰ দৰে
+            বিভিন্ন ক্ষেত্ৰত মেগা প্ৰতিযোগিতা।</p>
         </div>
-
-        <!-- Shown after successful payment — inline artwork upload -->
-        <div class="success-box" id="regSuccessBox">
-          <div class="success-icon">✅</div>
-          <h4>Payment Confirmed!</h4>
-          <p>Your spot is secured. Now upload your artwork below — or come back any time before May 14, 2026.</p>
-          <p class="success-payment-id" id="regPaymentId"></p>
+        <div class="glass-card">
+          <div style="font-size:2.5rem; margin-bottom:1rem;">🛠️</div>
+          <h4
+            style="font-family:'Playfair Display',serif; font-size:1.15rem; margin-bottom:0.6rem; color:var(--text-dark);">
+            Skill-building Workshops</h4>
+          <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.6;">প্ৰতিভাশালী ব্যক্তিসকলক পেছাদাৰী
+            প্ৰশিক্ষণ দিয়াৰ বাবে বিশেষ কৰ্মশালা।</p>
         </div>
-
-        <!-- Inline artwork upload (shown after payment on same page) -->
-        <div id="inlineUploadSection" style="display:none; margin-top:1.5rem;">
-          <div style="height:1px; background:var(--border); margin-bottom:1.5rem;"></div>
-          <h3 style="margin-bottom:0.25rem;">Upload Your Artwork</h3>
-          <p class="card-desc">You can upload now or use the "Upload Artwork" tab later with your email and phone.</p>
-
-          <div class="form-error" id="inlineUploadError"></div>
-
-          <div id="inlineUploadFields">
-            <div class="form-group">
-              <label>Artwork Title *</label>
-              <input type="text" id="inlineArtworkTitle" placeholder="Give your artwork a name">
-            </div>
-            <div class="form-group">
-              <label>Upload Artwork *</label>
-              <div class="upload-area" id="inlineUploadArea">
-                <input type="file" id="inlineArtwork" accept=".jpg,.jpeg,.png">
-                <div class="upload-icon"></div>
-                <p class="upload-text" id="inlineUploadText">
-                  <strong>Click to upload</strong> or drag and drop<br>JPG or PNG · Max 5MB
-                </p>
-              </div>
-            </div>
-
-            <div class="progress-wrap" id="inlineUploadProgress">
-              <div class="progress-bar-bg"><div class="progress-bar-fill" id="inlineUploadFill"></div></div>
-              <p class="progress-label" id="inlineUploadLabel">Uploading…</p>
-            </div>
-
-            <button class="btn-submit" id="inlineUploadBtn" onclick="handleInlineUpload()">
-              Submit Artwork →
-            </button>
-            <button class="btn-outline" onclick="switchTab('upload'); window.scrollTo({top:document.getElementById('apply').offsetTop,behavior:'smooth'});">
-              Upload Later Instead
-            </button>
-          </div>
-
-          <div class="success-box" id="inlineUploadSuccess">
-            <div class="success-icon">🎉</div>
-            <h4>Artwork Submitted!</h4>
-            <p>You're all set. Good luck — winners will be announced on our Instagram page.</p>
-          </div>
+        <div class="glass-card">
+          <div style="font-size:2.5rem; margin-bottom:1rem;">🎬</div>
+          <h4
+            style="font-family:'Playfair Display',serif; font-size:1.15rem; margin-bottom:0.6rem; color:var(--text-dark);">
+            Mega Reality Shows</h4>
+          <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.6;">অসমৰ সৰ্বশ্ৰেষ্ঠ প্ৰতিভাক লৈ ৰিয়েলিটি
+            শ্ব'ৰ আয়োজন।</p>
         </div>
-
-        <div class="form-trust" style="margin-top:1.2rem;">
-          <div class="form-trust-item"><span class="trust-shield"></span>Secured by Razorpay</div>
-          <div class="form-trust-item"><span class="trust-shield"></span>Data safely stored</div>
+        <div class="glass-card">
+          <div style="font-size:2.5rem; margin-bottom:1rem;">🚀</div>
+          <h4
+            style="font-family:'Playfair Display',serif; font-size:1.15rem; margin-bottom:0.6rem; color:var(--text-dark);">
+            Career Opportunities</h4>
+          <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.6;">উপযুক্ত প্ৰতিভাক ডাঙৰ প্ৰজেক্ট আৰু
+            মিডিয়াৰ জৰিয়তে পোনপটীয়া সুযোগ প্ৰদান।</p>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- ── TAB 2: UPLOAD ARTWORK (returning users) ── -->
-      <div id="panelUpload" style="display:none;">
-        <h3>Upload Your Artwork</h3>
-        <p class="card-desc">Already registered and paid? Enter your email and phone to verify, then submit your artwork.</p>
+  <div class="pattern-divider pattern-1"></div>
 
-        <div class="form-error" id="uploadError"></div>
-
-        <!-- Step A: Verify identity -->
-        <div id="uploadVerifyStep">
-          <div class="form-group">
-            <label>Email Address *</label>
-            <input type="email" id="uploadEmail" placeholder="The email you registered with">
-          </div>
-          <div class="form-group">
-            <label>Phone Number *</label>
-            <input type="tel" id="uploadPhone" placeholder="The phone you registered with">
-          </div>
-
-          <div class="progress-wrap" id="verifyProgress">
-            <div class="progress-bar-bg"><div class="progress-bar-fill" id="verifyProgressFill"></div></div>
-            <p class="progress-label" id="verifyProgressLabel">Verifying…</p>
-          </div>
-
-          <button class="btn-submit" id="verifyBtn" onclick="handleVerify()">
-            Verify My Registration →
-          </button>
+  <!-- WHY JOIN US -->
+  <section class="reveal section-why">
+    <div class="container text-center">
+      <p class="section-label">আপুনি কিয় 'তাৰকা'ৰ অংশ হ'ব?</p>
+      <h2 class="section-title">Why Join Us?</h2>
+      <div
+        style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1.2rem; margin-top:2.5rem;">
+        <div class="glass-card">
+          <div style="font-size:2.2rem; margin-bottom:0.8rem;">🌱</div>
+          <h4
+            style="font-family:'Playfair Display',serif; font-size:1.1rem; margin-bottom:0.5rem; color:var(--text-dark);">
+            Grassroots Platform</h4>
+          <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.6;">গাঁৱৰ পৰা গ্লেমাৰ জগতলৈ পোনপটীয়া
+            সুযোগ।</p>
         </div>
-
-        <!-- Step B: Upload (shown after verification) -->
-        <div id="uploadArtworkStep" style="display:none;">
-          <div class="info-box" id="verifyWelcome"></div>
-
-          <div class="form-group" style="margin-top:1rem;">
-            <label>Artwork Title *</label>
-            <input type="text" id="uploadArtworkTitle" placeholder="Give your artwork a name">
-          </div>
-          <div class="form-group">
-            <label>Upload Artwork *</label>
-            <div class="upload-area" id="uploadAreaMain">
-              <input type="file" id="uploadArtworkFile" accept=".jpg,.jpeg,.png">
-              <div class="upload-icon"></div>
-              <p class="upload-text" id="uploadArtworkText">
-                <strong>Click to upload</strong> or drag and drop<br>JPG or PNG · Max 5MB
-              </p>
-            </div>
-          </div>
-
-          <div class="progress-wrap" id="uploadProgress">
-            <div class="progress-bar-bg"><div class="progress-bar-fill" id="uploadProgressFill"></div></div>
-            <p class="progress-label" id="uploadProgressLabel">Uploading…</p>
-          </div>
-
-          <button class="btn-submit" id="uploadArtworkBtn" onclick="handleUploadArtwork()">
-            Submit Artwork →
-          </button>
+        <div class="glass-card">
+          <div style="font-size:2.2rem; margin-bottom:0.8rem;">📸</div>
+          <h4
+            style="font-family:'Playfair Display',serif; font-size:1.1rem; margin-bottom:0.5rem; color:var(--text-dark);">
+            Massive Exposure</h4>
+          <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.6;">ছচিয়েল মিডিয়া আৰু নিউজ প্লেটফৰ্মত
+            প্ৰচাৰ।</p>
         </div>
-
-        <!-- Final success -->
-        <div class="success-box" id="uploadFinalSuccess">
-          <div class="success-icon">🎉</div>
-          <h4>Artwork Submitted!</h4>
-          <p>Payment confirmed and your artwork has been received. Good luck — winners will be announced on our Instagram page.</p>
-        </div>
-
-        <div class="form-trust" style="margin-top:1.2rem;">
-          <div class="form-trust-item"><span class="trust-shield"></span>Artwork on Cloudinary</div>
-          <div class="form-trust-item"><span class="trust-shield"></span>Data safely stored</div>
+        <div class="glass-card">
+          <div style="font-size:2.2rem; margin-bottom:0.8rem;">🤝</div>
+          <h4
+            style="font-family:'Playfair Display',serif; font-size:1.1rem; margin-bottom:0.5rem; color:var(--text-dark);">
+            Mentorship</h4>
+          <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.6;">অভিজ্ঞ বিচাৰক আৰু প্ৰশিক্ষকৰ দ্বাৰা
+            সঠিক মাৰ্গদৰ্শন।</p>
         </div>
       </div>
-
-    </div><!-- end .form-card -->
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- SOCIAL PROOF -->
-<section class="proof-section">
-  <div class="container">
-    <div class="proof-banner">
-      <h3>1000+ artists expected</h3>
-      <p>Be among the first to participate in Assam's most celebrated online art competition</p>
     </div>
-    <p class="section-label text-center" style="margin-bottom:1rem;">Sample Artwork Slots</p>
-    <div class="artwork-placeholders">
-      <div class="artwork-ph"><img src="images/i1.jpeg" alt="Artwork 1" style="width:100%;height:100%;object-fit:cover;border-radius:14px;"></div>
-      <div class="artwork-ph"><img src="images/i2.jpeg" alt="Artwork 2" style="width:100%;height:100%;object-fit:cover;border-radius:14px;"></div>
-      <div class="artwork-ph"><img src="images/i3.jpeg" alt="Artwork 3" style="width:100%;height:100%;object-fit:cover;border-radius:14px;"></div>
+  </section>
+
+  <div class="gamosa-ribbon"></div>
+
+  <footer>
+    <div class="footer-logo">Taroka</div>
+    <p style="font-size:0.82rem;margin-bottom:1rem;">Creative Competitions Platform · Assam</p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/taroka.in/" target="_blank" rel="noopener noreferrer" class="social-link social-instagram" aria-label="Follow us on Instagram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        <span>Instagram</span>
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=61573297485195" target="_blank" rel="noopener noreferrer" class="social-link social-facebook" aria-label="Follow us on Facebook">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        <span>Facebook</span>
+      </a>
     </div>
-    <div class="text-center" style="margin-top:1.5rem;">
-      <a href="#apply" class="btn-primary">Secure Your Spot →</a>
+    <div class="footer-links">
+      <a href="mailto:contact@taroka.in">contact@taroka.in</a>
+      <a href="#competitions">Competitions</a>
     </div>
-  </div>
-</section>
+    <p class="footer-copy">© 2026 Taroka · Made with ❤ in Assam</p>
+  </footer>
 
-<div class="gamosa-ribbon"></div>
-
-<footer>
-  <div class="footer-logo">Taroka</div>
-  <p style="font-size:0.82rem;margin-bottom:1rem;">Bohag Bihu Drawing Competition · Assam</p>
-  <p class="footer-follow">Follow us for updates</p>
-  <a href="#" class="instagram-link"><span class="insta-icon"></span>@taroka.art</a>
-  <div class="footer-links">
-    <a href="mailto:contact@taroka.in">contact@taroka.in</a>
-    <a href="#prizes">Prizes</a>
-    <a href="#media">Media</a>
-    <a href="#apply">Apply</a>
-  </div>
-  <p style="font-size:0.8rem;color:rgba(255,255,255,0.4);">For any queries, contact us anytime. We're happy to help.</p>
-  <p class="footer-copy">© 2026 Taroka · Made with ❤ in Assam</p>
-</footer>
-
-<!-- ══════════════════════════════════════════
-     JAVASCRIPT
-══════════════════════════════════════════ -->
-<script>
-// ── State ──────────────────────────────────
-// Stored after successful payment so inline upload can use it
-let registeredUser = { name: '', email: '', phone: '' };
-
-// ── Tab switching ──────────────────────────
-function switchTab(tab) {
-  document.getElementById('panelRegister').style.display = tab === 'register' ? '' : 'none';
-  document.getElementById('panelUpload').style.display   = tab === 'upload'   ? '' : 'none';
-  document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
-  document.getElementById('tabUpload').classList.toggle('active',   tab === 'upload');
-}
-
-// ── Generic helpers ────────────────────────
-function showErr(id, msg) {
-  const el = document.getElementById(id);
-  el.textContent = msg;
-  el.classList.add('visible');
-  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-function hideErr(id) { document.getElementById(id).classList.remove('visible'); }
-
-function setProgress(fillId, labelId, pct, label) {
-  document.getElementById(fillId).style.width = pct + '%';
-  document.getElementById(labelId).textContent = label;
-}
-function showProgress(wrapId) { document.getElementById(wrapId).classList.add('visible'); }
-function hideProgress(wrapId) { document.getElementById(wrapId).classList.remove('visible'); }
-
-function setBtn(id, text, disabled) {
-  const b = document.getElementById(id);
-  b.textContent = text;
-  b.disabled = disabled;
-}
-
-// ── File picker label ──────────────────────
-function bindFilePicker(inputId, areaId, textId) {
-  document.getElementById(inputId).addEventListener('change', function () {
-    const file = this.files[0];
-    if (!file) return;
-    document.getElementById(areaId).classList.add('has-file');
-    document.getElementById(textId).innerHTML =
-      `<strong>${file.name}</strong><br><span style="color:var(--orange)">✓ Selected</span>`;
-  });
-}
-bindFilePicker('inlineArtwork',    'inlineUploadArea', 'inlineUploadText');
-bindFilePicker('uploadArtworkFile','uploadAreaMain',   'uploadArtworkText');
-
-
-// ══════════════════════════════════════════
-// STEP 1 — Register & Pay
-// ══════════════════════════════════════════
-async function handleRegister() {
-  hideErr('regError');
-
-  const name  = document.getElementById('regName').value.trim();
-  const email = document.getElementById('regEmail').value.trim();
-  const phone = document.getElementById('regPhone').value.trim();
-  const age   = document.getElementById('regAge').value.trim();
-
-  if (!name)  return showErr('regError', 'Please enter your full name.');
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-              return showErr('regError', 'Please enter a valid email address.');
-  if (!phone) return showErr('regError', 'Please enter your phone number.');
-  if (!age)   return showErr('regError', 'Please enter your age.');
-
-  // Create Razorpay order
-  setBtn('regBtn', 'Creating order…', true);
-  let orderData;
-  try {
-    const res = await fetch('/api/create-order', {
-      method : 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body   : JSON.stringify({ email }),
-    });
-    orderData = await res.json();
-    if (!res.ok) throw new Error(orderData.error || 'Could not initiate payment.');
-  } catch (err) {
-    setBtn('regBtn', 'Pay ₹99 & Register →', false);
-    return showErr('regError', err.message);
-  }
-
-  // Open Razorpay modal
-  const rzp = new Razorpay({
-    key         : orderData.keyId,
-    amount      : orderData.amount,
-    currency    : orderData.currency,
-    name        : 'Taroka',
-    description : 'Bohag Bihu Drawing Competition – Entry Fee',
-    order_id    : orderData.orderId,
-    prefill     : { name, email, contact: phone },
-    theme       : { color: '#F97316' },
-
-    handler: async function (response) {
-      // Payment done — register on server
-      showProgress('regProgress');
-      setProgress('regProgressFill', 'regProgressLabel', 40, 'Confirming registration…');
-      setBtn('regBtn', 'Registering…', true);
-
-      try {
-        const res = await fetch('/api/register', {
-          method : 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body   : JSON.stringify({
-            name, email, phone, age,
-            razorpay_order_id  : response.razorpay_order_id,
-            razorpay_payment_id: response.razorpay_payment_id,
-            razorpay_signature : response.razorpay_signature,
-          }),
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Registration failed.');
-
-        setProgress('regProgressFill', 'regProgressLabel', 100, 'Done!');
-
-        // Save user info for inline upload
-        registeredUser = { name, email, phone };
-
-        setTimeout(() => {
-          hideProgress('regProgress');
-          document.getElementById('regFields').style.display = 'none';
-          document.getElementById('regSuccessBox').classList.add('visible');
-          document.getElementById('regPaymentId').textContent = 'Payment ID: ' + response.razorpay_payment_id;
-          document.getElementById('inlineUploadSection').style.display = '';
-        }, 500);
-
-      } catch (err) {
-        hideProgress('regProgress');
-        setBtn('regBtn', 'Pay ₹99 & Register →', false);
-        showErr('regError',
-          'Payment was successful but registration failed. Contact contact@taroka.in with payment ID: '
-          + response.razorpay_payment_id
-        );
-      }
-    },
-
-    modal: { ondismiss: () => setBtn('regBtn', 'Pay ₹99 & Register →', false) }
-  });
-
-  rzp.on('payment.failed', (r) => {
-    setBtn('regBtn', 'Pay ₹99 & Register →', false);
-    showErr('regError', 'Payment failed: ' + (r.error.description || 'Please try again.'));
-  });
-
-  rzp.open();
-}
-
-
-// ══════════════════════════════════════════
-// STEP 2a — Inline artwork upload (right after payment)
-// ══════════════════════════════════════════
-async function handleInlineUpload() {
-  hideErr('inlineUploadError');
-
-  const artworkTitle = document.getElementById('inlineArtworkTitle').value.trim();
-  const artworkFile  = document.getElementById('inlineArtwork').files[0];
-
-  if (!artworkTitle) return showErr('inlineUploadError', 'Please give your artwork a title.');
-  if (!artworkFile)  return showErr('inlineUploadError', 'Please upload your artwork.');
-  if (!['image/jpeg','image/png'].includes(artworkFile.type))
-    return showErr('inlineUploadError', 'Only JPG and PNG files are allowed.');
-  if (artworkFile.size > 5 * 1024 * 1024)
-    return showErr('inlineUploadError', 'File size must be under 5MB.');
-
-  setBtn('inlineUploadBtn', 'Uploading…', true);
-  showProgress('inlineUploadProgress');
-  setProgress('inlineUploadFill', 'inlineUploadLabel', 30, 'Uploading artwork…');
-
-  try {
-    const fd = new FormData();
-    fd.append('email',        registeredUser.email);
-    fd.append('phone',        registeredUser.phone);
-    fd.append('artworkTitle', artworkTitle);
-    fd.append('artwork',      artworkFile);
-
-    setProgress('inlineUploadFill', 'inlineUploadLabel', 60, 'Saving to cloud…');
-
-    const res  = await fetch('/api/upload-artwork', { method: 'POST', body: fd });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Upload failed.');
-
-    setProgress('inlineUploadFill', 'inlineUploadLabel', 100, 'Done!');
-
-    setTimeout(() => {
-      hideProgress('inlineUploadProgress');
-      document.getElementById('inlineUploadFields').style.display = 'none';
-      document.getElementById('inlineUploadSuccess').classList.add('visible');
-    }, 500);
-
-  } catch (err) {
-    hideProgress('inlineUploadProgress');
-    setBtn('inlineUploadBtn', 'Submit Artwork →', false);
-    showErr('inlineUploadError', err.message);
-  }
-}
-
-
-// ══════════════════════════════════════════
-// STEP 2b — Verify returning user (Tab 2)
-// ══════════════════════════════════════════
-async function handleVerify() {
-  hideErr('uploadError');
-
-  const email = document.getElementById('uploadEmail').value.trim();
-  const phone = document.getElementById('uploadPhone').value.trim();
-
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-    return showErr('uploadError', 'Please enter a valid email address.');
-  if (!phone)
-    return showErr('uploadError', 'Please enter your phone number.');
-
-  setBtn('verifyBtn', 'Verifying…', true);
-  showProgress('verifyProgress');
-  setProgress('verifyProgressFill', 'verifyProgressLabel', 50, 'Checking your registration…');
-
-  try {
-    const res  = await fetch('/api/verify-user', {
-      method : 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body   : JSON.stringify({ email, phone }),
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Verification failed.');
-
-    setProgress('verifyProgressFill', 'verifyProgressLabel', 100, 'Verified!');
-
-    // Store for upload step
-    registeredUser = { email, phone, name: data.name };
-
-    setTimeout(() => {
-      hideProgress('verifyProgress');
-      document.getElementById('uploadVerifyStep').style.display = 'none';
-      document.getElementById('verifyWelcome').textContent = '👋 ' + data.message;
-      document.getElementById('uploadArtworkStep').style.display = '';
-    }, 400);
-
-  } catch (err) {
-    hideProgress('verifyProgress');
-    setBtn('verifyBtn', 'Verify My Registration →', false);
-    showErr('uploadError', err.message);
-  }
-}
-
-
-// ══════════════════════════════════════════
-// STEP 2c — Upload artwork (Tab 2, after verify)
-// ══════════════════════════════════════════
-async function handleUploadArtwork() {
-  hideErr('uploadError');
-
-  const artworkTitle = document.getElementById('uploadArtworkTitle').value.trim();
-  const artworkFile  = document.getElementById('uploadArtworkFile').files[0];
-
-  if (!artworkTitle) return showErr('uploadError', 'Please give your artwork a title.');
-  if (!artworkFile)  return showErr('uploadError', 'Please upload your artwork.');
-  if (!['image/jpeg','image/png'].includes(artworkFile.type))
-    return showErr('uploadError', 'Only JPG and PNG files are allowed.');
-  if (artworkFile.size > 5 * 1024 * 1024)
-    return showErr('uploadError', 'File size must be under 5MB.');
-
-  setBtn('uploadArtworkBtn', 'Uploading…', true);
-  showProgress('uploadProgress');
-  setProgress('uploadProgressFill', 'uploadProgressLabel', 30, 'Uploading your artwork…');
-
-  try {
-    const fd = new FormData();
-    fd.append('email',        registeredUser.email);
-    fd.append('phone',        registeredUser.phone);
-    fd.append('artworkTitle', artworkTitle);
-    fd.append('artwork',      artworkFile);
-
-    setProgress('uploadProgressFill', 'uploadProgressLabel', 65, 'Saving to cloud…');
-
-    const res  = await fetch('/api/upload-artwork', { method: 'POST', body: fd });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Upload failed.');
-
-    setProgress('uploadProgressFill', 'uploadProgressLabel', 100, 'All done!');
-
-    setTimeout(() => {
-      hideProgress('uploadProgress');
-      document.getElementById('uploadVerifyStep').style.display  = 'none';
-      document.getElementById('uploadArtworkStep').style.display = 'none';
-      document.getElementById('uploadFinalSuccess').classList.add('visible');
-    }, 500);
-
-  } catch (err) {
-    hideProgress('uploadProgress');
-    setBtn('uploadArtworkBtn', 'Submit Artwork →', false);
-    showErr('uploadError', err.message);
-  }
-}
-</script>
-
+  <script src="js/app.js"></script>
 </body>
+
 </html>
